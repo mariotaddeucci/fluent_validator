@@ -1,4 +1,5 @@
 from fluent_validator.validators.value_validator import ValueValidator
+from functools import wraps
 
 class Validator(ValueValidator):
 
@@ -19,3 +20,6 @@ class Validator(ValueValidator):
         
         return wrapper
 
+@wraps(Validator.__init__)
+def validate(*args, **kwargs):
+    return Validator(*args, **kwargs)
