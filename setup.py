@@ -1,10 +1,12 @@
+import codecs
+import os
+
 from setuptools import setup
 
-long_description = """
-# Fluent Validator
+here = os.path.abspath(os.path.dirname(__file__))
 
-Package to validate data in a fluent way
-"""
+with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
+    long_description = "\\n" + fh.read()
 
 setup(
     name="fluent_validator",
