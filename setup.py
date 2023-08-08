@@ -17,7 +17,7 @@ setup(
     url="https://github.com/mariotaddeucci/fluent_validator",
     long_description_content_type="text/markdown",
     long_description=long_description,
-    packages=["fluent_validator"],
+    packages=["fluent_validator", "fluent_validator.validators"],
     install_requires=[],
     keywords=["validator", "check", "fluent", "assert"],
     classifiers=[
