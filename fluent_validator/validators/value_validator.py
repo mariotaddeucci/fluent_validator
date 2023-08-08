@@ -35,9 +35,6 @@ class ValueValidator(TypeValidator):
     def _is_false(self) -> bool:
         return self._is_bool() and self.obj is False
 
-    def _is_empty(self) -> bool:
-        return not self.obj
-
     def _contains_at_least(self, value) -> bool:
         return len(self.obj) >= value
 
