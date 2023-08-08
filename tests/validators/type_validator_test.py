@@ -1,6 +1,7 @@
+import pytest
+
 from fluent_validator.validators.type_validator import TypeValidator
 
-import pytest
 
 @pytest.mark.parametrize(
     "value,dtype,expected",
@@ -30,6 +31,7 @@ def test_is_callable(value, expected):
     validator = TypeValidator(value)
     assert validator._is_callable() is expected
 
+
 @pytest.mark.parametrize(
     "value,expected",
     [
@@ -48,6 +50,7 @@ def test_is_iterable(value, expected):
     validator = TypeValidator(value)
     assert validator._is_iterable() is expected
 
+
 @pytest.mark.parametrize(
     "value,expected",
     [
@@ -58,6 +61,7 @@ def test_is_iterable(value, expected):
 def test_is_string(value, expected):
     validator = TypeValidator(value)
     assert validator._is_string() is expected
+
 
 @pytest.mark.parametrize(
     "value,expected",

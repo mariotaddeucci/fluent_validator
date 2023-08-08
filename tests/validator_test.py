@@ -1,6 +1,6 @@
-from fluent_validator import validate
-
 import pytest
+
+from fluent_validator import validate
 
 
 def test_chained_validation():
@@ -11,7 +11,7 @@ def test_chained_validation():
 
     with pytest.raises(ValueError):
         validate(True).is_string()
-    
+
 
 def test_unimplemented_validation():
     with pytest.raises(NotImplementedError):
