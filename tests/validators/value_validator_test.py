@@ -205,3 +205,19 @@ def test_contains_exactly(value, length, expected):
 def test_is_none(value, expected):
     validator = ValueValidator(value)
     assert validator._is_none() is expected
+
+
+@pytest.mark.parametrize(
+    "value,expected",
+    [
+        ((1, 2), True),
+        ({1, 2}, True),
+        ([4, 5, 6], True),
+        ([1, 1, 1], False),
+        ("abc", True),
+        ("AA", False),
+    ],
+)
+def test_has_unique_values(value, expected):
+    validator = ValueValidator(value)
+    assert validator._has_unique_values() is expected
