@@ -46,3 +46,6 @@ class ValueValidator(TypeValidator):
 
     def _is_none(self) -> bool:
         return self.obj is None
+
+    def _has_unique_values(self) -> bool:
+        return len(self.obj) == len(set(self.obj))
