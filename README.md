@@ -53,6 +53,12 @@ For example, the negative of `is_none()` is `not_is_none()`.
 
 | Validation | Description |
 | --- | --- |
+| `is_instance()` | Check if the object is an instance of one or more specified types. |
+| `is_callable()` | Check if the object is callable (e.g., a function or method). |
+| `is_iterable()` | Check if the object is iterable. |
+| `is_string()` | Check if the object is a string. |
+| `is_number()` | Check if the object is a number (int or float). |
+| `is_bool()` | Check if the object is a boolean. |
 | `equal(value)` | Check if the object is equal to the specified value. |
 | `is_in()` | Check if the object is in a collection of values. |
 | `greater_than(value)` | Check if the object is greater than the specified value. |
@@ -69,12 +75,6 @@ For example, the negative of `is_none()` is `not_is_none()`.
 | `contains_exactly(value)` | Check if the object (assumed to be iterable) contains exactly the specified number of elements. |
 | `is_none()` | Check if the object is None. |
 | `has_unique_values()` | Check if the object (assumed to be iterable) contains unique values. Note: This function assumes that the object's elements are hashable. |
-| `is_instance()` | Check if the object is an instance of one or more specified types. |
-| `is_callable()` | Check if the object is callable (e.g., a function or method). |
-| `is_iterable()` | Check if the object is iterable. |
-| `is_string()` | Check if the object is a string. |
-| `is_number()` | Check if the object is a number (int or float). |
-| `is_bool()` | Check if the object is a boolean. |
 
 ## License
 
