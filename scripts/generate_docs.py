@@ -92,7 +92,7 @@ def main():
     validators_dir = os.path.join(project_dir, "fluent_validator", "validators")
     output_file = os.path.join(project_dir, "README.md")
 
-    validation_list = "\n\n\n".join(
+    validation_list = "\\\n".join(
         validator_doc.strip()
         for file in glob.glob(os.path.join(validators_dir, "*.py"))
         for validator_doc in extract_validators_docs(file)
