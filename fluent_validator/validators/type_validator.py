@@ -7,9 +7,6 @@ class TypeValidator(BaseValidator):
     def _is_instance(self, *args):
         """
         Check if the object is an instance of one or more specified types.
-
-        Args:
-            *args: One or more types to check against.
         """
 
         return isinstance(self.obj, args)

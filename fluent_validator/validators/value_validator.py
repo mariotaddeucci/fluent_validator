@@ -5,82 +5,54 @@ class ValueValidator(TypeValidator):
     def _equal(self, value):
         """
         Check if the object is equal to the specified value.
-
-        Args:
-            value: The value to compare with.
         """
         return self.obj == value
 
-    def _is_in(self, *args):
+    def _is_in(self, *values):
         """
         Check if the object is in a collection of values.
-
-        Args:
-            *args: Values to check for containment.
         """
-        return self.obj in args
+        return self.obj in values
 
     def _greater_than(self, value):
         """
         Check if the object is greater than the specified value.
-
-        Args:
-            value: The value to compare with.
         """
         return self.obj > value
 
     def _less_than(self, value):
         """
         Check if the object is less than the specified value.
-
-        Args:
-            value: The value to compare with.
         """
         return self.obj < value
 
     def _greater_or_equal_than(self, value):
         """
         Check if the object is greater than or equal to the specified value.
-
-        Args:
-            value: The value to compare with.
         """
         return self.obj >= value
 
     def _less_or_equal_than(self, value):
         """
         Check if the object is less than or equal to the specified value.
-
-        Args:
-            value: The value to compare with.
         """
         return self.obj <= value
 
     def _min(self, value):
         """
         Check if the object is greater than or equal to the specified minimum value.
-
-        Args:
-            value: The minimum value to compare with.
         """
         return self._greater_or_equal_than(value)
 
     def _max(self, value):
         """
         Check if the object is less than or equal to the specified maximum value.
-
-        Args:
-            value: The maximum value to compare with.
         """
         return self._less_or_equal_than(value)
 
     def _between(self, min, max):
         """
         Check if the object is within the specified range.
-
-        Args:
-            min: The minimum value of the range.
-            max: The maximum value of the range.
         """
         return self._min(min) and self._max(max)
 
@@ -96,32 +68,23 @@ class ValueValidator(TypeValidator):
         """
         return self._is_bool() and self.obj is False
 
-    def _contains_at_least(self, value):
+    def _contains_at_least(self, num_of_min_elements):
         """
         Check if the object (assumed to be iterable) contains at least the specified number of elements.
-
-        Args:
-            value: The minimum number of elements to check for.
         """
-        return len(self.obj) >= value
+        return len(self.obj) >= num_of_min_elements
 
-    def _contains_at_most(self, value):
+    def _contains_at_most(self, num_of_max_elements):
         """
         Check if the object (assumed to be iterable) contains at most the specified number of elements.
-
-        Args:
-            value: The maximum number of elements to check for.
         """
-        return len(self.obj) <= value
+        return len(self.obj) <= num_of_max_elements
 
-    def _contains_exactly(self, value):
+    def _contains_exactly(self, num_of_elements):
         """
         Check if the object (assumed to be iterable) contains exactly the specified number of elements.
-
-        Args:
-            value: The exact number of elements to check for.
         """
-        return len(self.obj) == value
+        return len(self.obj) == num_of_elements
 
     def _is_none(self):
         """
