@@ -94,14 +94,18 @@ def main():
     validators_dir = os.path.join(project_dir, "fluent_validator", "validators")
     output_file = os.path.join(project_dir, "README.md")
 
-    validation_list = "\n".join(
+    validations_list = [
         validator_doc.strip()
         for file in glob.glob(os.path.join(validators_dir, "*.py"))
         for validator_doc in extract_validators_docs(file)
+    ]
+
+    content = TEMPLATE.replace(
+        "{{ validation_list }}", "\n".join(sorted(validations_list))
     )
 
     with open(output_file, "w", encoding="utf-8") as file:
-        file.write(TEMPLATE.replace("{{ validation_list }}", validation_list))
+        file.write(content)
 
 
 if __name__ == "__main__":
