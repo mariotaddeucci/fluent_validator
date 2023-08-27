@@ -22,3 +22,11 @@ repos:
     hooks:
       - id: isort
         args: [--profile=black]
+
+-   repo: local
+    hooks:
+    -   id: generate_docs
+        name: Generate Docs (README.md)
+        entry: python scripts/generate_docs.py
+        language: python
+        pass_filenames: false

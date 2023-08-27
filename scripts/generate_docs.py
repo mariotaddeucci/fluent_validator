@@ -1,4 +1,8 @@
+import ast
+import glob
+import os
 
+TEMPLATE = """
 # fluent_validator
 
 **Validate Your Data with Ease!**
@@ -53,28 +57,7 @@ For example, the negative of `is_none()` is `not_is_none()`.
 
 | Validation | Description |
 | --- | --- |
-| `between(min_vl, max_vl)` | Check if the object is within the specified range. |
-| `contains_at_least(value)` | Check if the object (assumed to be iterable) contains at least the specified number of elements. |
-| `contains_at_most(value)` | Check if the object (assumed to be iterable) contains at most the specified number of elements. |
-| `contains_exactly(value)` | Check if the object (assumed to be iterable) contains exactly the specified number of elements. |
-| `equal(value)` | Check if the object is equal to the specified value. |
-| `greater_or_equal_than(value)` | Check if the object is greater than or equal to the specified value. |
-| `greater_than(value)` | Check if the object is greater than the specified value. |
-| `has_unique_values()` | Check if the object (assumed to be iterable) contains unique values. Note: This function assumes that the object's elements are hashable. |
-| `is_bool()` | Check if the object is a boolean. |
-| `is_callable()` | Check if the object is callable (e.g., a function or method). |
-| `is_false()` | Check if the object is a boolean and has a value of False. |
-| `is_in()` | Check if the object is in a collection of values. |
-| `is_instance()` | Check if the object is an instance of one or more specified types. |
-| `is_iterable()` | Check if the object is iterable. |
-| `is_none()` | Check if the object is None. |
-| `is_number()` | Check if the object is a number (int or float). |
-| `is_string()` | Check if the object is a string. |
-| `is_true()` | Check if the object is a boolean and has a value of True. |
-| `less_or_equal_than(value)` | Check if the object is less than or equal to the specified value. |
-| `less_than(value)` | Check if the object is less than the specified value. |
-| `max(value)` | Check if the object is less than or equal to the specified maximum value. |
-| `min(value)` | Check if the object is greater than or equal to the specified minimum value. |
+{{ validation_list }}
 
 ## License
 
@@ -85,3 +68,45 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you encounter any issues or have questions about `fluent_validator`, please feel free to [open an issue](https://github.com/mariotaddeucci/fluent_validator/issues). We're here to help!
 
 Happy Validating! 🚀
+"""
+
+
+def extract_validators_docs(filename):
+    with open(filename, "r", encoding="utf-8") as file:
+        tree = ast.parse(file.read())
+
+    for node in ast.walk(tree):
+        if isinstance(node, ast.FunctionDef):
+            docstring = ast.get_docstring(node)
+            if docstring:
+                docstring = [
+                    line.strip() for line in docstring.split("\n") if line.strip() != ""
+                ]
+                docstring = " ".join(docstring)
+
+                method_name = node.name.strip("_")
+                args = [arg.arg for arg in node.args.args if arg.arg != "self"]
+                yield f"| `{method_name}({', '.join(args)})` | {docstring} |"
+
+
+def main():
+    project_dir = os.path.join(os.path.dirname(__file__), "..")
+    validators_dir = os.path.join(project_dir, "fluent_validator", "validators")
+    output_file = os.path.join(project_dir, "README.md")
+
+    validations_list = [
+        validator_doc.strip()
+        for file in glob.glob(os.path.join(validators_dir, "*.py"))
+        for validator_doc in extract_validators_docs(file)
+    ]
+
+    content = TEMPLATE.replace(
+        "{{ validation_list }}", "\n".join(sorted(validations_list))
+    )
+
+    with open(output_file, "w", encoding="utf-8") as file:
+        file.write(content)
+
+
+if __name__ == "__main__":
+    main()
