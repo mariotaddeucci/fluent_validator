@@ -1,0 +1,4 @@
+[project]
+dynamic = ["dependencies"]
+[tool.setuptools.dynamic]
+optional-dependencies = {dev = { file = ["requirements-dev.txt"] }}
