@@ -50,11 +50,11 @@ class ValueValidator(TypeValidator):
         """
         return self._less_or_equal_than(value)
 
-    def _between(self, min, max):
+    def _between(self, min_value, max_value):
         """
         Check if the object is within the specified range.
         """
-        return self._min(min) and self._max(max)
+        return self._min(min_value) and self._max(max_value)
 
     def _is_true(self):
         """
@@ -68,23 +68,23 @@ class ValueValidator(TypeValidator):
         """
         return self._is_bool() and self.obj is False
 
-    def _contains_at_least(self, num_of_min_elements):
+    def _contains_at_least(self, value):
         """
         Check if the object (assumed to be iterable) contains at least the specified number of elements.
         """
-        return len(self.obj) >= num_of_min_elements
+        return len(self.obj) >= value
 
-    def _contains_at_most(self, num_of_max_elements):
+    def _contains_at_most(self, value):
         """
         Check if the object (assumed to be iterable) contains at most the specified number of elements.
         """
-        return len(self.obj) <= num_of_max_elements
+        return len(self.obj) <= value
 
-    def _contains_exactly(self, num_of_elements):
+    def _contains_exactly(self, value):
         """
         Check if the object (assumed to be iterable) contains exactly the specified number of elements.
         """
-        return len(self.obj) == num_of_elements
+        return len(self.obj) == value
 
     def _is_none(self):
         """

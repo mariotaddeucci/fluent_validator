@@ -61,12 +61,12 @@ For example, the negative of `is_none()` is `not_is_none()`.
 | `less_or_equal_than(value)` | Check if the object is less than or equal to the specified value. |
 | `min(value)` | Check if the object is greater than or equal to the specified minimum value. |
 | `max(value)` | Check if the object is less than or equal to the specified maximum value. |
-| `between(min, max)` | Check if the object is within the specified range. |
+| `between(min_value, max_value)` | Check if the object is within the specified range. |
 | `is_true()` | Check if the object is a boolean and has a value of True. |
 | `is_false()` | Check if the object is a boolean and has a value of False. |
-| `contains_at_least(num_of_min_elements)` | Check if the object (assumed to be iterable) contains at least the specified number of elements. |
-| `contains_at_most(num_of_max_elements)` | Check if the object (assumed to be iterable) contains at most the specified number of elements. |
-| `contains_exactly(num_of_elements)` | Check if the object (assumed to be iterable) contains exactly the specified number of elements. |
+| `contains_at_least(value)` | Check if the object (assumed to be iterable) contains at least the specified number of elements. |
+| `contains_at_most(value)` | Check if the object (assumed to be iterable) contains at most the specified number of elements. |
+| `contains_exactly(value)` | Check if the object (assumed to be iterable) contains exactly the specified number of elements. |
 | `is_none()` | Check if the object is None. |
 | `has_unique_values()` | Check if the object (assumed to be iterable) contains unique values. Note: This function assumes that the object's elements are hashable. |
 | `is_instance()` | Check if the object is an instance of one or more specified types. |
