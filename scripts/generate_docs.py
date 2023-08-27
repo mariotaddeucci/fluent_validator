@@ -2,6 +2,67 @@ import ast
 import glob
 import os
 
+TEMPLATE = """
+# fluent_validator
+
+**Validate Your Data with Ease!**
+
+[![GitHub stars](https://img.shields.io/github/stars/mariotaddeucci/fluent_validator.svg?style=flat-square)](https://github.com/mariotaddeucci/fluent_validator/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/mariotaddeucci/fluent_validator.svg?style=flat-square)](https://github.com/mariotaddeucci/fluent_validator/network)
+[![GitHub issues](https://img.shields.io/github/issues/mariotaddeucci/fluent_validator.svg?style=flat-square)](https://github.com/mariotaddeucci/fluent_validator/issues)
+[![GitHub license](https://img.shields.io/github/license/mariotaddeucci/fluent_validator.svg?style=flat-square)](https://github.com/mariotaddeucci/fluent_validator/blob/main/LICENSE)
+
+## Overview
+
+`fluent_validator` is a Python package that makes data validation a breeze! Say goodbye to complex, nested if statements and hello to a fluent and expressive way to validate your data. With `fluent_validator`, you can easily define and execute validation rules for your data in a clean and readable manner.
+
+## Features
+
+- **Fluent Syntax**: Define validation rules in a clean and fluent manner.
+- **No Extra Dependencies**: `fluent_validator` is lightweight and doesn't require any additional packages.
+- **Python 3.7+ Support**: It works seamlessly with Python versions 3.7, 3.8, 3.9, 3.10, and 3.11.
+- **Extensive Validation Library**: Check out our extensive list of available validations to cover all your validation needs.
+
+## Installation
+
+You can install `fluent_validator` using pip:
+
+```bash
+pip install fluent_validator
+````
+
+## Usage
+
+Here's a quick example of how to use `fluent_validator`:
+
+```python
+from fluent_validator import validate, validate_all
+
+# Validate a single value
+validate(10).not_is_none().greater_than(5).not_equal(40)
+
+# Or validate multiple values
+validate_all(10, 100).not_is_none().greater_than(5).not_equal(40)
+```
+
+## Available Validations
+
+`fluent_validator` offers a wide range of validations to suit your needs. Check out the full list of available above.
+Notably, all validations have a corresponding negative form. Simply prefix the method with `not_`. For example, the negative of `is_none()` is `not_is_none()`.  This allows you to easily express and handle both affirmative and negative validation scenarios with clarity and precision.
+
+{{ validation_list }}
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+If you encounter any issues or have questions about `fluent_validator`, please feel free to [open an issue](https://github.com/mariotaddeucci/fluent_validator/issues). We're here to help!
+
+Happy Validating! 🚀
+"""
+
 
 def extract_validators_docs(filename):
     with open(filename, "r", encoding="utf-8") as file:
@@ -24,12 +85,16 @@ def extract_validators_docs(filename):
 def main():
     project_dir = os.path.join(os.path.dirname(__file__), "..")
     validators_dir = os.path.join(project_dir, "fluent_validator", "validators")
-    output_file = os.path.join(project_dir, "validators.md")
+    output_file = os.path.join(project_dir, "README.md")
 
-    with open(output_file, "w", encoding="utf-8") as out:
-        for file in glob.glob(os.path.join(validators_dir, "*.py")):
-            for validator_doc in extract_validators_docs(file):
-                out.write(f"{validator_doc}\n")
+    validation_list = "\n".join(
+        validator_doc.strip()
+        for file in glob.glob(os.path.join(validators_dir, "*.py"))
+        for validator_doc in extract_validators_docs(file)
+    )
+
+    with open(output_file, "w", encoding="utf-8") as file:
+        file.write(TEMPLATE.replace("{{ validation_list }}", validation_list))
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@ from fluent_validator import validate, validate_all
 
 
 def test_chained_validation():
-    validate(True).is_true().not_is_false().not_is_none()
+    validate(10).not_is_none().greater_than(5).not_equal(40)
 
     with pytest.raises(ValueError):
         validate(True).is_false()
