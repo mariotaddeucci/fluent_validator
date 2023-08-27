@@ -15,6 +15,19 @@
 
 `fluent_validator` is a Python package that makes data validation a breeze! Say goodbye to complex, nested if statements and hello to a fluent and expressive way to validate your data. With `fluent_validator`, you can easily define and execute validation rules for your data in a clean and readable manner.
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Available Validations](#available-validations)
+  - [Check out the full list of available above.](#check-out-the-full-list-of-available-above)
+- [License](#license)
+- [Support](#support)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Features
 
 - **Fluent Syntax**: Define validation rules in a clean and fluent manner.
