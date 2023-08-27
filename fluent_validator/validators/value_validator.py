@@ -50,11 +50,11 @@ class ValueValidator(TypeValidator):
         """
         return self._less_or_equal_than(value)
 
-    def _between(self, min_value, max_value):
+    def _between(self, min_vl, max_vl):
         """
         Check if the object is within the specified range.
         """
-        return self._min(min_value) and self._max(max_value)
+        return self._min(min_vl) and self._max(max_vl)
 
     def _is_true(self):
         """
