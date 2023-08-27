@@ -49,31 +49,73 @@ Notably, all validations have a corresponding negative form. Simply prefix the m
 
 For example, the negative of `is_none()` is `not_is_none()`.
 
-Check out the full list of available above.
+### Check out the full list of available above.
 
 `equal(value)` Check if the object is equal to the specified value.
+
+
 `is_in()` Check if the object is in a collection of values.
+
+
 `greater_than(value)` Check if the object is greater than the specified value.
+
+
 `less_than(value)` Check if the object is less than the specified value.
+
+
 `greater_or_equal_than(value)` Check if the object is greater than or equal to the specified value.
+
+
 `less_or_equal_than(value)` Check if the object is less than or equal to the specified value.
+
+
 `min(value)` Check if the object is greater than or equal to the specified minimum value.
+
+
 `max(value)` Check if the object is less than or equal to the specified maximum value.
+
+
 `between(min, max)` Check if the object is within the specified range.
+
+
 `is_true()` Check if the object is a boolean and has a value of True.
+
+
 `is_false()` Check if the object is a boolean and has a value of False.
+
+
 `contains_at_least(num_of_min_elements)` Check if the object (assumed to be iterable) contains at least the specified number of elements.
+
+
 `contains_at_most(num_of_max_elements)` Check if the object (assumed to be iterable) contains at most the specified number of elements.
+
+
 `contains_exactly(num_of_elements)` Check if the object (assumed to be iterable) contains exactly the specified number of elements.
+
+
 `is_none()` Check if the object is None.
+
+
 `has_unique_values()` Check if the object (assumed to be iterable) contains unique values.
 
 Note: This function assumes that the object's elements are hashable.
+
+
 `is_instance()` Check if the object is an instance of one or more specified types.
+
+
 `is_callable()` Check if the object is callable (e.g., a function or method).
+
+
 `is_iterable()` Check if the object is iterable.
+
+
 `is_string()` Check if the object is a string.
+
+
 `is_number()` Check if the object is a number (int or float).
+
+
 `is_bool()` Check if the object is a boolean.
 
 ## License
