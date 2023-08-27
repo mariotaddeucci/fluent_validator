@@ -1,3 +1,4 @@
+import typing
 from functools import wraps
 
 from fluent_validator.validators.value_validator import ValueValidator
@@ -23,7 +24,7 @@ class Validator(ValueValidator):
 
 
 class MultiValidator:
-    def __init__(self, validators: list[Validator]):
+    def __init__(self, validators: typing.List[Validator]):
         self._validators = validators
 
     def __getattr__(self, fn_name):
