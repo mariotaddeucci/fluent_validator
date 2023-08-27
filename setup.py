@@ -1,7 +1,7 @@
 import codecs
 import os
 
-from setuptools import setup
+from setuptools import find_packages, setup
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -17,7 +17,7 @@ setup(
     url="https://github.com/mariotaddeucci/fluent_validator",
     long_description_content_type="text/markdown",
     long_description=long_description,
-    packages=["fluent_validator", "fluent_validator.validators"],
+    packages=find_packages(exclude=["tests", "tests.*", "docs", "docs.*", "scripts"]),
     install_requires=[],
     keywords=["validator", "check", "fluent", "assert"],
     classifiers=[
