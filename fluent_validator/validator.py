@@ -22,6 +22,20 @@ class Validator(ValueValidator):
         return wrapper
 
 
+class MultiValidator:
+    def __init__(self, *args):
+        self.args = args
+
+    def __getattr__(self, fn_name):
+        for arg in self.args:
+            getattr(arg, fn_name)()
+
+
 @wraps(Validator.__init__)
 def validate(*args, **kwargs):
     return Validator(*args, **kwargs)
+
+
+@wraps(MultiValidator.__init__)
+def validate_all(*args, **kwargs):
+    return MultiValidator(*args, **kwargs)
