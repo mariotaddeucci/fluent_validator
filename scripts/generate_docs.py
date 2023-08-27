@@ -55,6 +55,8 @@ For example, the negative of `is_none()` is `not_is_none()`.
 
 ### Check out the full list of available above.
 
+| Validation | Description |
+| --- | --- |
 {{ validation_list }}
 
 ## License
@@ -80,11 +82,11 @@ def extract_validators_docs(filename):
                 docstring = [
                     line.strip() for line in docstring.split("\n") if line.strip() != ""
                 ]
-                docstring = "\n\n".join(docstring)
+                docstring = " ".join(docstring)
 
                 method_name = node.name.strip("_")
                 args = [arg.arg for arg in node.args.args if arg.arg != "self"]
-                yield f"`{method_name}({', '.join(args)})` {docstring}"
+                yield f"| `{method_name}({', '.join(args)})` | {docstring} |"
 
 
 def main():
@@ -92,7 +94,7 @@ def main():
     validators_dir = os.path.join(project_dir, "fluent_validator", "validators")
     output_file = os.path.join(project_dir, "README.md")
 
-    validation_list = "\\\n".join(
+    validation_list = "\n".join(
         validator_doc.strip()
         for file in glob.glob(os.path.join(validators_dir, "*.py"))
         for validator_doc in extract_validators_docs(file)
