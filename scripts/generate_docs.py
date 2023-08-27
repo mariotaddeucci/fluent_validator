@@ -47,8 +47,13 @@ validate_all(10, 100).not_is_none().greater_than(5).not_equal(40)
 
 ## Available Validations
 
-`fluent_validator` offers a wide range of validations to suit your needs. Check out the full list of available above.
-Notably, all validations have a corresponding negative form. Simply prefix the method with `not_`. For example, the negative of `is_none()` is `not_is_none()`.  This allows you to easily express and handle both affirmative and negative validation scenarios with clarity and precision.
+`fluent_validator` offers a wide range of validations to suit your needs.
+
+Notably, all validations have a corresponding negative form. Simply prefix the method with `not_`.
+
+For example, the negative of `is_none()` is `not_is_none()`.
+
+Check out the full list of available above.
 
 {{ validation_list }}
 
@@ -75,11 +80,11 @@ def extract_validators_docs(filename):
                 docstring = [
                     line.strip() for line in docstring.split("\n") if line.strip() != ""
                 ]
-                docstring = "\n".join(docstring)
+                docstring = "\n\n".join(docstring)
 
                 method_name = node.name.strip("_")
                 args = [arg.arg for arg in node.args.args if arg.arg != "self"]
-                yield f"**{method_name}({', '.join(args)})** {docstring}"
+                yield f"`{method_name}({', '.join(args)})` {docstring}"
 
 
 def main():
