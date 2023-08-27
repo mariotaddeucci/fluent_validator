@@ -53,7 +53,7 @@ Notably, all validations have a corresponding negative form. Simply prefix the m
 
 For example, the negative of `is_none()` is `not_is_none()`.
 
-Check out the full list of available above.
+### Check out the full list of available above.
 
 {{ validation_list }}
 
@@ -92,7 +92,7 @@ def main():
     validators_dir = os.path.join(project_dir, "fluent_validator", "validators")
     output_file = os.path.join(project_dir, "README.md")
 
-    validation_list = "\n".join(
+    validation_list = "\n\n".join(
         validator_doc.strip()
         for file in glob.glob(os.path.join(validators_dir, "*.py"))
         for validator_doc in extract_validators_docs(file)
