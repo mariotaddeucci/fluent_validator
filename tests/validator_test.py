@@ -21,7 +21,7 @@ def test_unimplemented_validation():
 def test_multi_validation():
     validate_all(True, True).is_true()
     validate_all(True, True).not_is_false()
-    validate_all(10, 100).is_greater_than(5)
+    validate_all(10, 100).greater_than(5).not_equal(40)
 
     with pytest.raises(ValueError):
         validate_all(True, False).is_true()

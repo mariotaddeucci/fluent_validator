@@ -23,12 +23,24 @@ class Validator(ValueValidator):
 
 
 class MultiValidator:
-    def __init__(self, *args):
-        self.args = args
+    def __init__(self, validators: list[Validator]):
+        self._validators = validators
 
     def __getattr__(self, fn_name):
-        for arg in self.args:
-            getattr(arg, fn_name)()
+        def wrapper(*args, **kwargs):
+            result = all(
+                getattr(validator, fn_name)(*args, **kwargs)
+                for validator in self._validators
+            )
+
+            if result:
+                return self
+
+            raise ValueError(
+                f"{self._validators} does not match criteria for {fn_name}"
+            )
+
+        return wrapper
 
 
 @wraps(Validator.__init__)
@@ -36,6 +48,5 @@ def validate(*args, **kwargs):
     return Validator(*args, **kwargs)
 
 
-@wraps(MultiValidator.__init__)
-def validate_all(*args, **kwargs):
-    return MultiValidator(*args, **kwargs)
+def validate_all(*args):
+    return MultiValidator([validate(arg) for arg in args])
