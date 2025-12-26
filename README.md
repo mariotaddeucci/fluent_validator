@@ -45,47 +45,58 @@ Here's a quick example of how to use `fluent_validator`:
 ```python
 from fluent_validator import validate, validate_all
 
-# Validate a single value
+# Validate a single value (old style - still supported for backward compatibility)
 validate(10).not_is_none().greater_than(5).not_equal(40)
 
+# New semantic style (more readable)
+validate(10).is_not_none().greater_than(5).is_not_equal(40)
+
 # Or validate multiple values
-validate_all(10, 100).not_is_none().greater_than(5).not_equal(40)
+validate_all(10, 100).is_not_none().greater_than(5).is_not_equal(40)
+
+# Check if values are empty or not
+validate([]).is_empty()
+validate("hello").is_not_empty()
 ```
 
 ## Available Validations
 
 `fluent_validator` offers a wide range of validations to suit your needs.
 
-Notably, all validations have a corresponding negative form. Simply prefix the method with `not_`.
+Notably, all validations have a corresponding negative form using **two styles**:
 
-For example, the negative of `is_none()` is `not_is_none()`.
+1. **Old style** (for backward compatibility): Prefix with `not_` - e.g., `not_is_none()`, `not_equal()`
+2. **New semantic style** (recommended): Use `is_not_*` methods - e.g., `is_not_none()`, `is_not_equal()`
+
+Both styles are fully supported and can be mixed in the same validation chain.
 
 ### Check out the full list of available above.
 
-| Validation | Description |
-| --- | --- |
-| `between(min_vl, max_vl)` | Check if the object is within the specified range. |
-| `contains_at_least(value)` | Check if the object (assumed to be iterable) contains at least the specified number of elements. |
-| `contains_at_most(value)` | Check if the object (assumed to be iterable) contains at most the specified number of elements. |
-| `contains_exactly(value)` | Check if the object (assumed to be iterable) contains exactly the specified number of elements. |
-| `equal(value)` | Check if the object is equal to the specified value. |
-| `greater_or_equal_than(value)` | Check if the object is greater than or equal to the specified value. |
-| `greater_than(value)` | Check if the object is greater than the specified value. |
-| `has_unique_values()` | Check if the object (assumed to be iterable) contains unique values. Note: This function assumes that the object's elements are hashable. |
-| `is_bool()` | Check if the object is a boolean. |
-| `is_callable()` | Check if the object is callable (e.g., a function or method). |
-| `is_false()` | Check if the object is a boolean and has a value of False. |
-| `is_in()` | Check if the object is in a collection of values. |
-| `is_instance()` | Check if the object is an instance of one or more specified types. |
-| `is_iterable()` | Check if the object is iterable. |
-| `is_none()` | Check if the object is None. |
-| `is_number()` | Check if the object is a number (int or float). |
-| `is_string()` | Check if the object is a string. |
-| `is_true()` | Check if the object is a boolean and has a value of True. |
-| `less_or_equal_than(value)` | Check if the object is less than or equal to the specified value. |
-| `less_than(value)` | Check if the object is less than the specified value. |
-| `max(value)` | Check if the object is less than or equal to the specified maximum value. |
-| `min(value)` | Check if the object is greater than or equal to the specified minimum value. |
+| Validation | Description | Semantic Negative |
+| --- | --- | --- |
+| `between(min_vl, max_vl)` | Check if the object is within the specified range. | - |
+| `contains_at_least(value)` | Check if the object (assumed to be iterable) contains at least the specified number of elements. | - |
+| `contains_at_most(value)` | Check if the object (assumed to be iterable) contains at most the specified number of elements. | - |
+| `contains_exactly(value)` | Check if the object (assumed to be iterable) contains exactly the specified number of elements. | - |
+| `equal(value)` | Check if the object is equal to the specified value. | `is_not_equal(value)` |
+| `greater_or_equal_than(value)` | Check if the object is greater than or equal to the specified value. | - |
+| `greater_than(value)` | Check if the object is greater than the specified value. | - |
+| `has_unique_values()` | Check if the object (assumed to be iterable) contains unique values. Note: This function assumes that the object's elements are hashable. | - |
+| `is_bool()` | Check if the object is a boolean. | `is_not_bool()` |
+| `is_callable()` | Check if the object is callable (e.g., a function or method). | `is_not_callable()` |
+| `is_empty()` | Check if the object is empty (length is 0 or is None). | `is_not_empty()` |
+| `is_false()` | Check if the object is a boolean and has a value of False. | `is_not_false()` |
+| `is_in()` | Check if the object is in a collection of values. | `is_not_in()` |
+| `is_instance()` | Check if the object is an instance of one or more specified types. | `is_not_instance()` |
+| `is_iterable()` | Check if the object is iterable. | `is_not_iterable()` |
+| `is_none()` | Check if the object is None. | `is_not_none()` |
+| `is_number()` | Check if the object is a number (int or float). | `is_not_number()` |
+| `is_string()` | Check if the object is a string. | `is_not_string()` |
+| `is_true()` | Check if the object is a boolean and has a value of True. | `is_not_true()` |
+| `less_or_equal_than(value)` | Check if the object is less than or equal to the specified value. | - |
+| `less_than(value)` | Check if the object is less than the specified value. | - |
+| `max(value)` | Check if the object is less than or equal to the specified maximum value. | - |
+| `min(value)` | Check if the object is greater than or equal to the specified minimum value. | - |
 
 ## License
 
