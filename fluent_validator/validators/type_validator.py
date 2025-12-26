@@ -40,3 +40,40 @@ class TypeValidator(BaseValidator):
         Check if the object is a boolean.
         """
         return self._is_instance(bool)
+
+    # Semantic negative methods
+    def _is_not_instance(self, *args):
+        """
+        Check if the object is not an instance of one or more specified types.
+        """
+        return not self._is_instance(*args)
+
+    def _is_not_callable(self):
+        """
+        Check if the object is not callable.
+        """
+        return not self._is_callable()
+
+    def _is_not_iterable(self):
+        """
+        Check if the object is not iterable.
+        """
+        return not self._is_iterable()
+
+    def _is_not_string(self):
+        """
+        Check if the object is not a string.
+        """
+        return not self._is_string()
+
+    def _is_not_number(self):
+        """
+        Check if the object is not a number.
+        """
+        return not self._is_number()
+
+    def _is_not_bool(self):
+        """
+        Check if the object is not a boolean.
+        """
+        return not self._is_bool()

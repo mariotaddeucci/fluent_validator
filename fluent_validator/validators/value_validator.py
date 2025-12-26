@@ -99,3 +99,54 @@ class ValueValidator(TypeValidator):
         Note: This function assumes that the object's elements are hashable.
         """
         return len(self.obj) == len(set(self.obj))
+
+    def _is_empty(self):
+        """
+        Check if the object is empty (has length 0 or is None).
+        
+        Note: This method treats None as empty for convenience in validation chains.
+        For objects without a length (like numbers), this returns False.
+        """
+        if self.obj is None:
+            return True
+        try:
+            return len(self.obj) == 0
+        except TypeError:
+            return False
+
+    # Semantic negative methods
+    def _is_not_none(self):
+        """
+        Check if the object is not None.
+        """
+        return not self._is_none()
+
+    def _is_not_empty(self):
+        """
+        Check if the object is not empty.
+        """
+        return not self._is_empty()
+
+    def _is_not_equal(self, value):
+        """
+        Check if the object is not equal to the specified value.
+        """
+        return not self._equal(value)
+
+    def _is_not_in(self, *values):
+        """
+        Check if the object is not in a collection of values.
+        """
+        return not self._is_in(*values)
+
+    def _is_not_true(self):
+        """
+        Check if the object is not True.
+        """
+        return not self._is_true()
+
+    def _is_not_false(self):
+        """
+        Check if the object is not False.
+        """
+        return not self._is_false()
