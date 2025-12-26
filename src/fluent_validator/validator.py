@@ -26,13 +26,20 @@ class Validator(ValueValidator):
             raise NotImplementedError(f"{validation_name} is not implemented")
 
         def wrapper(*args, **kwargs):
+            # Extract custom message if provided via 'message' keyword argument
+            custom_message = kwargs.pop('message', None)
+            
             result = getattr(self, validation_name)(*args, **kwargs)
             # Only negate for old style (not_is_X), semantic methods already handle negation
             result = not result if is_old_style_negative else result
             if result:
                 return self
 
-            raise ValueError(f"{self.identifier} does not match criteria for {fn_name}")
+            # Use custom message if provided, otherwise use default
+            if custom_message:
+                raise ValueError(custom_message)
+            else:
+                raise ValueError(f"{self.identifier} does not match criteria for {fn_name}")
 
         return wrapper
 
@@ -43,17 +50,34 @@ class MultiValidator:
 
     def __getattr__(self, fn_name):
         def wrapper(*args, **kwargs):
-            result = all(
-                getattr(validator, fn_name)(*args, **kwargs)
-                for validator in self._validators
-            )
+            # Extract custom message if provided via 'message' keyword argument
+            custom_message = kwargs.pop('message', None)
+            
+            # Don't pass the message to individual validators in multi-validator context
+            # They will raise their own errors if they fail
+            try:
+                result = all(
+                    getattr(validator, fn_name)(*args, **kwargs)
+                    for validator in self._validators
+                )
+            except ValueError:
+                # If any validator fails, raise with custom message if provided
+                if custom_message:
+                    raise ValueError(custom_message)
+                else:
+                    raise  # Re-raise the original error
 
             if result:
                 return self
 
-            raise ValueError(
-                f"{self._validators} does not match criteria for {fn_name}"
-            )
+            # This shouldn't be reached if validators raise errors properly
+            # Use custom message if provided, otherwise use default
+            if custom_message:
+                raise ValueError(custom_message)
+            else:
+                raise ValueError(
+                    f"{self._validators} does not match criteria for {fn_name}"
+                )
 
         return wrapper
 
