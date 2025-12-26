@@ -26,8 +26,10 @@
 ## Features
 
 - **Fluent Syntax**: Define validation rules in a clean and fluent manner.
+- **Custom Error Messages**: Provide custom error messages for any validation method.
 - **No Extra Dependencies**: `fluent_validator` is lightweight and doesn't require any additional packages.
 - **Python 3.7+ Support**: It works seamlessly with Python versions 3.7, 3.8, 3.9, 3.10, and 3.11.
+- **Type Hints**: Full type hint support with Pyrefly type checking.
 - **Extensive Validation Library**: Check out our extensive list of available validations to cover all your validation needs.
 
 ## Installation
@@ -36,7 +38,22 @@ You can install `fluent_validator` using pip:
 
 ```bash
 pip install fluent-validator
-````
+```
+
+### Development Installation
+
+For development with type checking and linting tools:
+
+```bash
+pip install -r dev-requirements.txt
+```
+
+This includes:
+- `pytest` for testing
+- `pyrefly` for fast type checking
+- `black` for code formatting
+- `isort` for import sorting
+- `pre-commit` for git hooks
 
 ## Usage
 
@@ -57,6 +74,28 @@ validate_all(10, 100).is_not_none().greater_than(5).is_not_equal(40)
 # Check if values are empty or not
 validate([]).is_empty()
 validate("hello").is_not_empty()
+```
+
+### Custom Error Messages
+
+You can provide custom error messages for any validation by using the `message` parameter:
+
+```python
+from fluent_validator import validate
+
+# Custom message for a single validation
+validate(15).greater_than(18, message="Age must be greater than 18")
+# Raises: ValueError: Age must be greater than 18
+
+# Custom messages work with all validation methods
+validate(None).is_not_none(message="Value cannot be None")
+validate("hello").is_number(message="Expected a number, got a string")
+
+# Custom messages in validation chains
+validate(5).is_not_none().is_number().greater_than(10, message="Value must be greater than 10")
+
+# Custom messages with validate_all
+validate_all(5, 15, 20).greater_than(10, message="All values must be greater than 10")
 ```
 
 ## Available Validations
@@ -97,6 +136,69 @@ Both styles are fully supported and can be mixed in the same validation chain.
 | `less_than(value)` | Check if the object is less than the specified value. | - |
 | `max(value)` | Check if the object is less than or equal to the specified maximum value. | - |
 | `min(value)` | Check if the object is greater than or equal to the specified minimum value. | - |
+
+## Development
+
+### Project Structure
+
+The project follows the `src` layout for better organization:
+
+```
+fluent_validator/
+├── src/
+│   └── fluent_validator/      # Main package code
+│       ├── __init__.py
+│       ├── validator.py
+│       └── validators/
+│           ├── __init__.py
+│           ├── base_validator.py
+│           ├── type_validator.py
+│           └── value_validator.py
+├── tests/                     # Test files
+├── dev-requirements.txt       # Development dependencies
+├── pyrefly.toml              # Pyrefly type checker configuration
+└── .pre-commit-config.yaml   # Pre-commit hooks
+```
+
+### Type Checking
+
+This project uses [Pyrefly](https://github.com/facebook/pyrefly), a fast Python type checker, to ensure type safety:
+
+```bash
+# Run type checking
+pyrefly check src/
+```
+
+### Running Tests
+
+```bash
+# Install test dependencies
+pip install -r requirements.txt
+
+# Run all tests
+pytest
+
+# Run tests with coverage
+pytest --cov=fluent_validator
+```
+
+### Code Quality
+
+We use pre-commit hooks to maintain code quality:
+
+```bash
+# Install pre-commit hooks
+pre-commit install
+
+# Run pre-commit on all files
+pre-commit run --all-files
+```
+
+The pre-commit hooks include:
+- `black` for code formatting
+- `isort` for import sorting
+- `pyrefly` for type checking
+- Various other checks for code quality
 
 ## License
 
