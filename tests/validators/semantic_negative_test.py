@@ -180,7 +180,8 @@ def test_is_not_string(value, expected):
         (1, False),
         (2.0, False),
         ("hello", True),
-        # Note: bool is a subclass of int in Python, so True/False are considered numbers
+        # Note: In Python, bool is a subclass of int, so isinstance(True, int) returns True.
+        # This means _is_number() considers booleans as numbers.
     ],
 )
 def test_is_not_number(value, expected):

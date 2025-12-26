@@ -103,6 +103,9 @@ class ValueValidator(TypeValidator):
     def _is_empty(self):
         """
         Check if the object is empty (has length 0 or is None).
+        
+        Note: This method treats None as empty for convenience in validation chains.
+        For objects without a length (like numbers), this returns False.
         """
         if self.obj is None:
             return True

@@ -28,7 +28,7 @@ class Validator(ValueValidator):
         def wrapper(*args, **kwargs):
             result = getattr(self, validation_name)(*args, **kwargs)
             # Only negate for old style (not_is_X), semantic methods already handle negation
-            result = not result if is_old_style_negative and not is_semantic_negative else result
+            result = not result if is_old_style_negative else result
             if result:
                 return self
 

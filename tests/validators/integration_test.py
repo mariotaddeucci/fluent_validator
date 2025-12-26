@@ -115,7 +115,7 @@ def test_is_not_string_semantic():
 
 def test_is_not_number_semantic():
     validate("hello").is_not_number()
-    # Note: bool is a subclass of int in Python, so True/False are considered numbers
+    # Note: Booleans are considered numbers in Python (bool is a subclass of int)
     
     with pytest.raises(ValueError):
         validate(10).is_not_number()
