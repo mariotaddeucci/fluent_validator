@@ -25,6 +25,12 @@ repos:
 
 -   repo: local
     hooks:
+    -   id: pyrefly
+        name: Pyrefly type checker
+        entry: pyrefly check src/
+        language: system
+        types: [python]
+        pass_filenames: false
     -   id: generate_docs
         name: Generate Docs (README.md)
         entry: python scripts/generate_docs.py

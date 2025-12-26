@@ -1,0 +1,29 @@
+# Pyrefly configuration file
+# Pyrefly is a fast Python type checker
+
+[tool.pyrefly]
+# Source directories to check
+source = ["src"]
+
+# Python version to target
+python_version = "3.7"
+
+# Exclude patterns
+exclude = [
+    ".git",
+    ".pytest_cache",
+    "__pycache__",
+    "*.egg-info",
+    "build",
+    "dist",
+]
+
+# Type checking settings
+strict = false
+warn_unused_ignores = true
+warn_return_any = false
+warn_redundant_casts = true
+check_untyped_defs = false
+
+# Allow dynamic attribute access (needed for __getattr__ usage)
+disable_error_code = ["attr-defined", "no-any-return"]

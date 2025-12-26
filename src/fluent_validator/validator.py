@@ -1,11 +1,12 @@
 import typing
 from functools import wraps
+from typing import Any, Callable, Optional
 
 from fluent_validator.validators.value_validator import ValueValidator
 
 
 class Validator(ValueValidator):
-    def __getattr__(self, fn_name):
+    def __getattr__(self, fn_name: str) -> Callable[..., "Validator"]:
         # Check for old style negation: not_is_X -> negate _is_X
         is_old_style_negative = fn_name.startswith("not_")
         
@@ -25,9 +26,9 @@ class Validator(ValueValidator):
         if validation_name not in dir(self):
             raise NotImplementedError(f"{validation_name} is not implemented")
 
-        def wrapper(*args, **kwargs):
+        def wrapper(*args: Any, **kwargs: Any) -> "Validator":
             # Extract custom message if provided via 'message' keyword argument
-            custom_message = kwargs.pop('message', None)
+            custom_message: Optional[str] = kwargs.pop('message', None)
             
             result = getattr(self, validation_name)(*args, **kwargs)
             # Only negate for old style (not_is_X), semantic methods already handle negation
@@ -45,13 +46,13 @@ class Validator(ValueValidator):
 
 
 class MultiValidator:
-    def __init__(self, validators: typing.List[Validator]):
+    def __init__(self, validators: typing.List[Validator]) -> None:
         self._validators = validators
 
-    def __getattr__(self, fn_name):
-        def wrapper(*args, **kwargs):
+    def __getattr__(self, fn_name: str) -> Callable[..., "MultiValidator"]:
+        def wrapper(*args: Any, **kwargs: Any) -> "MultiValidator":
             # Extract custom message if provided via 'message' keyword argument
-            custom_message = kwargs.pop('message', None)
+            custom_message: Optional[str] = kwargs.pop('message', None)
             
             # Don't pass the message to individual validators in multi-validator context
             # They will raise their own errors if they fail
@@ -83,9 +84,9 @@ class MultiValidator:
 
 
 @wraps(Validator.__init__)
-def validate(*args, **kwargs):
+def validate(*args: Any, **kwargs: Any) -> Validator:
     return Validator(*args, **kwargs)
 
 
-def validate_all(*args):
+def validate_all(*args: Any) -> MultiValidator:
     return MultiValidator([validate(arg) for arg in args])
