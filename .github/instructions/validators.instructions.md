@@ -34,13 +34,13 @@ Follow these strict rules when creating validators:
 
 Example pattern:
 
-from fluent_validator.validators import ValidatorBuilder as VB
+from fluent_validator.validators import ValidatorBuilder as vb
 
 def test_is_example():
     value = ...
 
-    validator_positive = VB.is_example(...)
-    validator_negative = VB.is_not_example(...)
+    validator_positive = vb.is_example(...)
+    validator_negative = vb.is_not_example(...)
 
     assert validator_positive.validate(value, strategy="return_result") is True
     assert validator_negative.validate(value, strategy="return_result") is False

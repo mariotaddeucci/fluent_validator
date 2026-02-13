@@ -1,45 +1,69 @@
 [project]
 name = "fluent_validator"
-version = "0.1.0"
+dependencies = []
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+version = "0.1.0"
 
 [dependency-groups]
 dev = [
     "pyrefly>=0.52.0",
     "pytest>=9.0.2",
     "ruff>=0.15.1",
+    "ssort>=0.16.0",
     "taskipy>=1.14.1",
 ]
 
-[tool.taskipy.tasks]
-lint = "ruff check . && ruff format --check . && pyrefly check"
-fix = "ruff check --fix . && ruff format ."
-test = "pytest"
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
-pythonpath = ["src"]
 addopts = [
-    "-v",
+    "--disable-warnings",
     "--strict-markers",
     "--tb=short",
-    "--disable-warnings",
+    "-v",
+]
+pythonpath = [
+    "src",
+]
+testpaths = [
+    "tests",
 ]
 
-
-
 [tool.ruff]
-target-version = "py311"
 line-length = 120
+target-version = "py311"
 
 [tool.ruff.format]
 docstring-code-format = true
 
 [tool.ruff.lint]
-extend-select = ["B", "Q", "UP", "I", "S", "T",  "COM", "EXE", "F", "ISC",  "RET", "RUF", "UP"]
-extend-unsafe-fixes = ["UP"]
+extend-select = [
+    "B",
+    "COM",
+    "EXE",
+    "F",
+    "I",
+    "ISC",
+    "Q",
+    "RET",
+    "RUF",
+    "S",
+    "T",
+    "UP",
+    "UP",
+]
+extend-unsafe-fixes = [
+    "UP",
+]
+
 [tool.ruff.lint.per-file-ignores]
-"tests/**.py" = ["S101", "D"]
+"tests/**.py" = [
+    "D",
+    "S101",
+]
+
+[tool.taskipy.tasks]
+fix = "ruff check --fix . && ruff format . && ssort"
+lint = "ruff check . && ruff format --check . && pyrefly check && ssort --check"
+test = "pytest"

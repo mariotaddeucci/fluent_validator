@@ -251,46 +251,6 @@ class ValidatorSpec:
             msg=msg,
         )
 
-    def __and__(self, other: "ValidatorSpec") -> Self:
-        if not isinstance(other, ValidatorSpec):
-            return NotImplemented
-
-        return self.add_validations(other.validations())
-
-    def __or__(self, other: "ValidatorSpec") -> Self:
-        if not isinstance(other, ValidatorSpec):
-            return NotImplemented
-
-        def combined_validation_factory(
-            validations1: list[tuple[Callable[[Any], bool], str]],
-            validations2: list[tuple[Callable[[Any], bool], str]],
-        ) -> Callable[[Any], bool]:
-            def combined_validation(obj: Any) -> bool:
-                return all(validation_fn(obj) for validation_fn, _ in validations1) or all(
-                    validation_fn(obj) for validation_fn, _ in validations2
-                )
-
-            return combined_validation
-
-        combined_validation_fn = combined_validation_factory(
-            self.validations(),
-            other.validations(),
-        )
-        combined_msg = f"({' and '.join(msg for _, msg in self.validations())}) OR ({' and '.join(msg for _, msg in other.validations())})"
-        return self.from_validations([(combined_validation_fn, combined_msg)])
-
-    def __neg__(self) -> Self:
-        def inverted_factory(validator: Self):
-            validator = validator.from_validations(validator.validations())
-
-            def inverted(obj: Any) -> bool:
-                return not validator.validate(obj, strategy="return_result")
-
-            msg = f"NOT({validator.describe()})"
-            return inverted, msg
-
-        return self.from_validations([inverted_factory(self)])
-
     def describe(self, pretty: bool = False) -> str:
         if pretty:
             raise NotImplementedError("Pretty description is not implemented yet")
@@ -347,3 +307,43 @@ class ValidatorSpec:
             raise ValidationError("; ".join(errors))
 
         return not errors
+
+    def __and__(self, other: "ValidatorSpec") -> Self:
+        if not isinstance(other, ValidatorSpec):
+            return NotImplemented
+
+        return self.add_validations(other.validations())
+
+    def __or__(self, other: "ValidatorSpec") -> Self:
+        if not isinstance(other, ValidatorSpec):
+            return NotImplemented
+
+        def combined_validation_factory(
+            validations1: list[tuple[Callable[[Any], bool], str]],
+            validations2: list[tuple[Callable[[Any], bool], str]],
+        ) -> Callable[[Any], bool]:
+            def combined_validation(obj: Any) -> bool:
+                return all(validation_fn(obj) for validation_fn, _ in validations1) or all(
+                    validation_fn(obj) for validation_fn, _ in validations2
+                )
+
+            return combined_validation
+
+        combined_validation_fn = combined_validation_factory(
+            self.validations(),
+            other.validations(),
+        )
+        combined_msg = f"({' and '.join(msg for _, msg in self.validations())}) OR ({' and '.join(msg for _, msg in other.validations())})"
+        return self.from_validations([(combined_validation_fn, combined_msg)])
+
+    def __neg__(self) -> Self:
+        def inverted_factory(validator: Self):
+            validator = validator.from_validations(validator.validations())
+
+            def inverted(obj: Any) -> bool:
+                return not validator.validate(obj, strategy="return_result")
+
+            msg = f"NOT({validator.describe()})"
+            return inverted, msg
+
+        return self.from_validations([inverted_factory(self)])
