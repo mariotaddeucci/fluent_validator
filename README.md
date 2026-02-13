@@ -1,109 +1,157 @@
-
 # fluent_validator
 
-**Validate Your Data with Ease!**
+Fluent, composable data validation for Python — a simple, expressive API to build readable validation rules.
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![PyPI version](https://badge.fury.io/py/fluent-validator.svg)](https://badge.fury.io/py/fluent-validator)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/fluent-validator)](https://pypi.org/project/fluent-validator/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/fluent-validator.svg)](https://pypi.org/project/fluent-validator/)
-[![GitHub stars](https://img.shields.io/github/stars/mariotaddeucci/fluent_validator.svg?style=flat-square)](https://github.com/mariotaddeucci/fluent_validator/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/mariotaddeucci/fluent_validator.svg?style=flat-square)](https://github.com/mariotaddeucci/fluent_validator/network)
-[![GitHub license](https://img.shields.io/github/license/mariotaddeucci/fluent_validator.svg?style=flat-square)](https://github.com/mariotaddeucci/fluent_validator/blob/main/LICENSE)
 
 ## Overview
 
-`fluent_validator` is a Python package that makes data validation a breeze! Say goodbye to complex, nested if statements and hello to a fluent and expressive way to validate your data. With `fluent_validator`, you can easily define and execute validation rules for your data in a clean and readable manner.
+`fluent_validator` makes it easy to declare validation rules in a fluent, composable way. Build reusable specifications with clear messages and combine them using logical operators.
 
-- [Features](#features)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Available Validations](#available-validations)
-- [License](#license)
-- [Support](#support)
-
-
-## Features
-
-- **Fluent Syntax**: Define validation rules in a clean and fluent manner.
-- **No Extra Dependencies**: `fluent_validator` is lightweight and doesn't require any additional packages.
-- **Python 3.7+ Support**: It works seamlessly with Python versions 3.7, 3.8, 3.9, 3.10, and 3.11.
-- **Extensive Validation Library**: Check out our extensive list of available validations to cover all your validation needs.
+- [Quick start](#quick-start)
+- [Combining validators](#combining-validators)
+- [describe (document rules)](#describe-document-rules)
+- [Available validations](#available-validations)
+- [Validation strategies](#validation-strategies)
+- [Quick API](#quick-api)
 
 ## Installation
 
-You can install `fluent_validator` using pip:
+Install from PyPI:
 
 ```bash
 pip install fluent-validator
-````
-
-## Usage
-
-Here's a quick example of how to use `fluent_validator`:
-
-```python
-from fluent_validator import validate, validate_all
-
-# Validate a single value (old style - still supported for backward compatibility)
-validate(10).not_is_none().greater_than(5).not_equal(40)
-
-# New semantic style (more readable)
-validate(10).is_not_none().greater_than(5).is_not_equal(40)
-
-# Or validate multiple values
-validate_all(10, 100).is_not_none().greater_than(5).is_not_equal(40)
-
-# Check if values are empty or not
-validate([]).is_empty()
-validate("hello").is_not_empty()
 ```
 
-## Available Validations
+## Quick start
 
-`fluent_validator` offers a wide range of validations to suit your needs.
+Basic usage examples:
 
-Notably, all validations have a corresponding negative form using **two styles**:
+```python
+from fluent_validator import Validator, ValidationError
 
-1. **Old style** (for backward compatibility): Prefix with `not_` - e.g., `not_is_none()`, `not_equal()`
-2. **New semantic style** (recommended): Use `is_not_*` methods - e.g., `is_not_none()`, `is_not_equal()`
+# build a composed specification
+spec = (
+    Validator.is_number()
+    .is_greater_than(5)
+    .is_less_than(20)
+)
 
-Both styles are fully supported and can be mixed in the same validation chain.
+# validate (default: raise_after_first_error)
+try:
+    spec.validate(7)
+    print("Valid")
+except ValidationError as e:
+    print("Invalid:", e)
 
-### Check out the full list of available above.
+# get boolean result without raising
+is_valid = spec.validate(7, strategy="return_result")  # True/False
 
-| Validation | Description | Semantic Negative |
-| --- | --- | --- |
-| `between(min_vl, max_vl)` | Check if the object is within the specified range. | - |
-| `contains_at_least(value)` | Check if the object (assumed to be iterable) contains at least the specified number of elements. | - |
-| `contains_at_most(value)` | Check if the object (assumed to be iterable) contains at most the specified number of elements. | - |
-| `contains_exactly(value)` | Check if the object (assumed to be iterable) contains exactly the specified number of elements. | - |
-| `equal(value)` | Check if the object is equal to the specified value. | `is_not_equal(value)` |
-| `greater_or_equal_than(value)` | Check if the object is greater than or equal to the specified value. | - |
-| `greater_than(value)` | Check if the object is greater than the specified value. | - |
-| `has_unique_values()` | Check if the object (assumed to be iterable) contains unique values. Note: This function assumes that the object's elements are hashable. | - |
-| `is_bool()` | Check if the object is a boolean. | `is_not_bool()` |
-| `is_callable()` | Check if the object is callable (e.g., a function or method). | `is_not_callable()` |
-| `is_empty()` | Check if the object is empty (length is 0 or is None). | `is_not_empty()` |
-| `is_false()` | Check if the object is a boolean and has a value of False. | `is_not_false()` |
-| `is_in()` | Check if the object is in a collection of values. | `is_not_in()` |
-| `is_instance()` | Check if the object is an instance of one or more specified types. | `is_not_instance()` |
-| `is_iterable()` | Check if the object is iterable. | `is_not_iterable()` |
-| `is_none()` | Check if the object is None. | `is_not_none()` |
-| `is_number()` | Check if the object is a number (int or float). | `is_not_number()` |
-| `is_string()` | Check if the object is a string. | `is_not_string()` |
-| `is_true()` | Check if the object is a boolean and has a value of True. | `is_not_true()` |
-| `less_or_equal_than(value)` | Check if the object is less than or equal to the specified value. | - |
-| `less_than(value)` | Check if the object is less than the specified value. | - |
-| `max(value)` | Check if the object is less than or equal to the specified maximum value. | - |
-| `min(value)` | Check if the object is greater than or equal to the specified minimum value. | - |
+# validate each item of an iterable
+list_spec = Validator.is_iterable().contains_at_least(2)
+list_spec.validate_each([1, 2, 3], strategy="return_result")  # True
+```
+
+## Combining validators
+
+Specifications can be combined with logical operators:
+
+```python
+# AND (concatenate validations)
+a = Validator.is_number().is_gte(0)
+b = Validator.is_number().is_lte(100)
+combined = a & b
+combined.validate(50)
+
+# OR (at least one group must pass)
+num_or_str = Validator.is_number() | Validator.is_string()
+num_or_str.validate("abc", strategy="return_result")  # True
+
+# Negation
+not_none = -Validator.is_none()
+not_none.validate(None, strategy="return_result")  # False
+```
+
+## describe (document rules)
+
+Each `ValidatorSpec` can render a textual description of the specification:
+
+```python
+spec = Validator.is_number().is_greater_than(5).is_less_than(20)
+print(spec.describe())
+print(spec.describe(pretty=True))
+```
+
+Example output for `pretty=True`:
+
+```
+'Should be a number (rule: is_number)'
+AND 'Should be greater than 5 (rule: is_greater_than)'
+AND 'Should be less than 20 (rule: is_less_than)'
+```
+
+Use `describe()` to generate messages for logs, documentation, or custom error reporting.
+
+## Available validations
+
+Below is a table of validator builder functions and a short description of each.
+
+| Function | Description |
+|---|---|
+| `is_instance_of(types)` / `is_not_instance_of(types)` | Checks the value is an instance of the provided types. |
+| `is_callable()` / `is_not_callable()` | Checks the value is callable. |
+| `is_iterable()` / `is_not_iterable()` | Checks the value is iterable. |
+| `is_dataclass()` / `is_not_dataclass()` | Checks the value is a dataclass. |
+| `is_string()` / `is_not_string()` | Checks the value is a string. |
+| `is_number()` / `is_not_number()` | Checks the value is numeric (`int`, `float`, `Decimal`). |
+| `is_bool()` / `is_not_bool()` | Checks the value is a boolean. |
+| `is_none()` / `is_not_none()` | Checks the value is `None`. |
+| `is_greater_than(value)` / `is_not_greater_than(value)` (`is_gt`) | Checks the value is greater than `value`. |
+| `is_greater_or_equal(value)` / `is_not_greater_or_equal(value)` (`is_gte`) | Checks the value is greater than or equal to `value`. |
+| `is_equal(value)` / `is_not_equal(value)` (`is_eq`) | Checks the value is equal to `value`. |
+| `is_less_than(value)` / `is_not_less_than(value)` (`is_lt`) | Checks the value is less than `value`. |
+| `is_less_or_equal(value)` / `is_not_less_or_equal(value)` (`is_lte`) | Checks the value is less than or equal to `value`. |
+| `is_between(lower, upper, closed='both')` / `is_not_between(...)` | Checks the value is between `lower` and `upper` (closed/open according to `closed`). |
+| `contains_at_least(n)` / `contains_at_most(n)` / `contains_exactly(n)` | Checks collection size (at least/at most/exactly `n` items). |
+| `has_unique_values()` | Checks that values in a collection are unique. |
+| `is_empty()` / `is_not_empty()` | Checks if the collection/value is empty. |
+| `is_true()` / `is_not_true()` / `is_false()` / `is_not_false()` | Checks boolean `True`/`False` values. |
+| `is_in(collection)` / `is_not_in(collection)` | Checks if the value is in `collection`. |
+| `add_validation(fn, msg)` / `add_validations(list[(fn, msg)])` | Adds custom validations by providing functions and messages. |
+
+See the function and class docstrings in the source for details and default messages.
+
+## Validation strategies
+
+The `validate` method accepts a `strategy` parameter:
+
+- `raise_after_first_error` (default): raises `ValidationError` on the first failing rule.
+- `raise_after_all_errors`: evaluates all rules and raises `ValidationError` with all messages joined.
+- `return_result`: does not raise; returns `True` if the value passes all rules or `False` otherwise.
+
+Use `validate_each` to validate every item in an iterable; errors include the failing item index when applicable.
+
+## Quick API
+
+Primary imports:
+
+```python
+from fluent_validator import Validator, ValidatorSpec, ValidationError
+```
+
+- `Validator` provides factory classmethods (e.g. `is_number()`, `is_string()`) returning configured `ValidatorSpec` instances.
+- `ValidatorSpec` is the builder that lets you chain validations, combine specs with `&`, `|`, negate with unary `-`, and call `describe()` / `validate()`.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License — see [LICENSE](LICENSE).
 
 ## Support
 
-If you encounter any issues or have questions about `fluent_validator`, please feel free to [open an issue](https://github.com/mariotaddeucci/fluent_validator/issues). We're here to help!
+Open an issue: https://github.com/mariotaddeucci/fluent_validator/issues
 
-Happy Validating! 🚀
+Happy validating! 🚀
