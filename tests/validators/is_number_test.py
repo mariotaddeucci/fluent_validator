@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from fluent_validator.validators import ValidatorBuilder as vb
+from fluent_validator import ValidatorBuilder as vb
 
 
 def test_is_number():

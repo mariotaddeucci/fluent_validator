@@ -1,5 +1,5 @@
-from fluent_validator.validators import ValidatorBuilder as vb
-from fluent_validator.validators import ValidatorSpec
+from fluent_validator import ValidatorBuilder as vb
+from fluent_validator import ValidatorSpec
 
 
 def test_describe_pretty_empty():

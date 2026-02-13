@@ -1,5 +1,5 @@
 ---
-applyTo: "src/fluent_validator/validators/functions.py,tests/validators/**/*.py"
+applyTo: "src/fluent_validator/functions.py,tests/validators/**/*.py"
 description: "Rules for implementing validators in Fluent Validator (Python)."
 name: "Fluent Validator - Python Validators Rules"
 ---
@@ -33,7 +33,7 @@ Follow these strict rules when creating validators:
 
 Example pattern:
 
-from fluent_validator.validators import ValidatorBuilder as vb
+from fluent_validator import ValidatorBuilder as vb
 
 def test_is_example():
     value = ...

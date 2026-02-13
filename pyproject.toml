@@ -41,6 +41,7 @@ docstring-code-format = true
 extend-select = [
     "B",
     "COM",
+    "D",
     "EXE",
     "F",
     "I",
@@ -51,19 +52,16 @@ extend-select = [
     "S",
     "T",
     "UP",
-    "UP",
 ]
 extend-unsafe-fixes = [
     "UP",
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**.py" = [
-    "D",
-    "S101",
-]
+"tests/**.py" = ["D", "S101"]
+
 
 [tool.taskipy.tasks]
-fix = "ruff check --fix . && ruff format . && ssort"
+fix = "ruff check --fix --unsafe-fixes . && ruff format . && ssort"
 lint = "ruff check . && ruff format --check . && pyrefly check && ssort --check"
 test = "pytest"
