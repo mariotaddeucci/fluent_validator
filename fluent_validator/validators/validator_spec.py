@@ -1,6 +1,6 @@
 from typing import Callable, Any, Self, Iterable, Literal, Type
 from .validator_fns import ValidatorFns
-from .validation_error import ValidationError
+from .exceptions import ValidationError
 
 
 class ValidatorSpec:
@@ -9,13 +9,11 @@ class ValidatorSpec:
 
     @classmethod
     def from_validations(cls, validations: list[tuple[Callable[[Any], bool], str]])  -> Self:
-
         return cls(validations=validations)
 
     @property
     def validations(self) -> list[tuple[Callable[[Any], bool], str]]:
         return self._validations.copy()
-
 
     def add_validation(self, validation_fn: Callable[[Any], bool], *, msg: str)  -> Self:
         return self.add_validations([(validation_fn, msg)])
