@@ -14,7 +14,6 @@ class ValidatorBuilder:
     ) -> ValidatorSpec:
         return cls.prepare().is_instance_of(types, msg=msg)
 
-    @wraps(ValidatorSpec.is_callable)
     @classmethod
     def is_callable(cls, *, msg: str | None = None) -> ValidatorSpec:
         return cls.prepare().is_callable(msg=msg)

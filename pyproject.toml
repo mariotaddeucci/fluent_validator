@@ -1,9 +1,9 @@
 [project]
-name = "python-app-backend"
+name = "fluent_validator"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = []
 
 [dependency-groups]
@@ -17,4 +17,14 @@ dev = [
 [tool.taskipy.tasks]
 lint = "ruff check . && ruff format --check . && pyrefly check"
 fix = "ruff check --fix . && ruff format ."
+test = "pytest"
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = [
+    "-v",
+    "--strict-markers",
+    "--tb=short",
+    "--disable-warnings",
+]
