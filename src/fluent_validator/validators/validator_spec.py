@@ -72,17 +72,17 @@ class ValidatorSpec:
     def is_gt(self, value: Any, *, msg: str | None = None) -> Self:
         return self.is_greater_than(value, msg=msg)
 
-    def is_greater_than_or_equal(self, value: Any, *, msg: str | None = None) -> Self:
+    def is_greater_or_equal(self, value: Any, *, msg: str | None = None) -> Self:
         msg = (
             msg
-            or f"object must be greater than or equal to {value} (rule: is_greater_than_or_equal)"
+            or f"object must be greater than or equal to {value} (rule: is_greater_or_equal)"
         )
         return self.add_validation(
-            lambda obj: ValidatorFns.is_greater_than_or_equal(obj, value), msg=msg
+            lambda obj: ValidatorFns.is_greater_or_equal(obj, value), msg=msg
         )
 
     def is_gte(self, value: Any, *, msg: str | None = None) -> Self:
-        return self.is_greater_than_or_equal(value, msg=msg)
+        return self.is_greater_or_equal(value, msg=msg)
 
     def is_equal(self, value: Any, *, msg: str | None = None) -> Self:
         msg = msg or f"object must be equal to {value} (rule: is_equal)"
@@ -102,17 +102,17 @@ class ValidatorSpec:
     def is_lt(self, value: Any, *, msg: str | None = None) -> Self:
         return self.is_less_than(value, msg=msg)
 
-    def is_less_than_or_equal(self, value: Any, *, msg: str | None = None) -> Self:
+    def is_less_or_equal(self, value: Any, *, msg: str | None = None) -> Self:
         msg = (
             msg
-            or f"object must be less than or equal to {value} (rule: is_less_than_or_equal)"
+            or f"object must be less than or equal to {value} (rule: is_less_or_equal)"
         )
         return self.add_validation(
-            lambda obj: ValidatorFns.is_less_than_or_equal(obj, value), msg=msg
+            lambda obj: ValidatorFns.is_less_or_equal(obj, value), msg=msg
         )
 
     def is_lte(self, value: Any, *, msg: str | None = None) -> Self:
-        return self.is_less_than_or_equal(value, msg=msg)
+        return self.is_less_or_equal(value, msg=msg)
 
     def is_between(
         self,

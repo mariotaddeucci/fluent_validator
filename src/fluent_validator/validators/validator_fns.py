@@ -49,11 +49,11 @@ class ValidatorFns:
         return obj < value
 
     @classmethod
-    def is_greater_than_or_equal(cls, obj: Any, value: Any) -> bool:
+    def is_greater_or_equal(cls, obj: Any, value: Any) -> bool:
         return obj >= value
 
     @classmethod
-    def is_less_than_or_equal(cls, obj: Any, value: Any) -> bool:
+    def is_less_or_equal(cls, obj: Any, value: Any) -> bool:
         return obj <= value
 
     @classmethod
@@ -65,17 +65,17 @@ class ValidatorFns:
         closed: Literal["both", "left", "right", "none"] = "both",
     ) -> bool:
         if closed == "both":
-            return cls.is_greater_than_or_equal(obj, lower_bound) and cls.is_less_than_or_equal(
-                obj, upper_bound
-            )
+            return cls.is_greater_or_equal(
+                obj, lower_bound
+            ) and cls.is_less_or_equal(obj, upper_bound)
 
         if closed == "left":
-            return cls.is_greater_than_or_equal(obj, lower_bound) and cls.is_less_than(
+            return cls.is_greater_or_equal(obj, lower_bound) and cls.is_less_than(
                 obj, upper_bound
             )
 
         if closed == "right":
-            return cls.is_greater_than(obj, lower_bound) and cls.is_less_than_or_equal(
+            return cls.is_greater_than(obj, lower_bound) and cls.is_less_or_equal(
                 obj, upper_bound
             )
 

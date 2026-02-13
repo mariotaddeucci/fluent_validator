@@ -1,5 +1,4 @@
 from typing import Type, Any, Callable, Literal
-from functools import wraps
 from .validator_spec import ValidatorSpec
 
 
@@ -51,10 +50,10 @@ class ValidatorBuilder:
         return cls.prepare().is_gt(value, msg=msg)
 
     @classmethod
-    def is_greater_than_or_equal(
+    def is_greater_or_equal(
         cls, value: Any, *, msg: str | None = None
     ) -> ValidatorSpec:
-        return cls.prepare().is_greater_than_or_equal(value, msg=msg)
+        return cls.prepare().is_greater_or_equal(value, msg=msg)
 
     @classmethod
     def is_gte(cls, value: Any, *, msg: str | None = None) -> ValidatorSpec:
@@ -77,10 +76,10 @@ class ValidatorBuilder:
         return cls.prepare().is_lt(value, msg=msg)
 
     @classmethod
-    def is_less_than_or_equal(
+    def is_less_or_equal(
         cls, value: Any, *, msg: str | None = None
     ) -> ValidatorSpec:
-        return cls.prepare().is_less_than_or_equal(value, msg=msg)
+        return cls.prepare().is_less_or_equal(value, msg=msg)
 
     @classmethod
     def is_lte(cls, value: Any, *, msg: str | None = None) -> ValidatorSpec:
@@ -107,4 +106,6 @@ class ValidatorBuilder:
         closed: Literal["both", "left", "right", "none"] = "both",
         msg: str | None = None,
     ) -> ValidatorSpec:
-        return cls.prepare().is_between(lower_bound, upper_bound, closed=closed, msg=msg)
+        return cls.prepare().is_between(
+            lower_bound, upper_bound, closed=closed, msg=msg
+        )
