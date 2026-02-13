@@ -1,8 +1,9 @@
 from collections.abc import Callable, Iterable
 from typing import Any, Literal, Self
 
-from .exceptions import ValidationError
 from fluent_validator.validators import functions as F
+
+from .exceptions import ValidationError
 
 
 class ValidatorSpec:
@@ -253,10 +254,7 @@ class ValidatorSpec:
         closed: Literal["both", "left", "right", "none"] = "both",
         msg: str | None = None,
     ) -> Self:
-        msg = (
-            msg
-            or f"Should not be between {lower_bound} and {upper_bound} (closed='{closed}') (rule: is_not_between)"
-        )
+        msg = msg or f"Should not be between {lower_bound} and {upper_bound} (closed='{closed}') (rule: is_not_between)"
         return self.add_validation(lambda obj: F.is_not_between(obj, lower_bound, upper_bound, closed), msg=msg)
 
     def _render_pretty(self, node: tuple | None, indent: int = 0, *, is_top_level: bool = True) -> str:

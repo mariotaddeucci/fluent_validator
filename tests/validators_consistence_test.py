@@ -1,7 +1,7 @@
 import inspect
 
-from fluent_validator.validators.validator_builder import ValidatorBuilder
 from fluent_validator.validators import functions as ValidatorFns
+from fluent_validator.validators.validator_builder import ValidatorBuilder
 from fluent_validator.validators.validator_spec import ValidatorSpec
 
 

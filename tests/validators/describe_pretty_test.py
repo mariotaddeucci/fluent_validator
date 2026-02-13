@@ -22,13 +22,7 @@ def test_describe_pretty_and_chain():
 def test_describe_pretty_or_combination():
     validator = vb.is_number() | vb.is_string()
 
-    expected = (
-        "(\n"
-        "    'Should be a number (rule: is_number)'\n"
-        "    OR\n"
-        "    'Should be a string (rule: is_string)'\n"
-        ")"
-    )
+    expected = "(\n    'Should be a number (rule: is_number)'\n    OR\n    'Should be a string (rule: is_string)'\n)"
     assert validator.describe(pretty=True) == expected
 
 
@@ -57,12 +51,7 @@ def test_describe_pretty_complex_and_or_not():
 def test_describe_pretty_not_compound():
     validator = -vb.is_number().is_string()
 
-    expected = (
-        "not (\n"
-        "    'Should be a number (rule: is_number)' AND\n"
-        "    'Should be a string (rule: is_string)'\n"
-        ")"
-    )
+    expected = "not (\n    'Should be a number (rule: is_number)' AND\n    'Should be a string (rule: is_string)'\n)"
     assert validator.describe(pretty=True) == expected
 
 
