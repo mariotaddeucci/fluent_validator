@@ -573,4 +573,3 @@ class Validator:
     def is_not_in(cls, collection: Iterable, *, msg: str | None = None) -> ValidatorSpec:
         """Create a ValidatorSpec that checks a value is not in the provided collection."""
         return cls.prepare().is_not_in(collection, msg=msg)
-
