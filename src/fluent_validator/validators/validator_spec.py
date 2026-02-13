@@ -15,7 +15,6 @@ class ValidatorSpec:
     ) -> Self:
         return cls(validations=validations)
 
-    @property
     def validations(self) -> list[tuple[Callable[[Any], bool], str]]:
         return self._validations.copy()
 
@@ -25,7 +24,7 @@ class ValidatorSpec:
     def add_validations(
         self, validations: list[tuple[Callable[[Any], bool], str]]
     ) -> Self:
-        return self.from_validations(self.validations + validations)
+        return self.from_validations(self.validations() + validations)
 
     def is_instance_of(
         self, types: Type | tuple[Type, ...], *, msg: str | None = None
@@ -233,7 +232,7 @@ class ValidatorSpec:
         if not isinstance(other, ValidatorSpec):
             return NotImplemented
 
-        return self.add_validations(other.validations)
+        return self.add_validations(other.validations())
 
     def __or__(self, other: "ValidatorSpec") -> Self:
         if not isinstance(other, ValidatorSpec):
@@ -251,14 +250,14 @@ class ValidatorSpec:
             return combined_validation
 
         combined_validation_fn = combined_validation_factory(
-            self.validations, other.validations
+            self.validations(), other.validations()
         )
-        combined_msg = f"({' and '.join(msg for _, msg in self.validations)}) OR ({' and '.join(msg for _, msg in other.validations)})"
+        combined_msg = f"({' and '.join(msg for _, msg in self.validations())}) OR ({' and '.join(msg for _, msg in other.validations())})"
         return self.from_validations([(combined_validation_fn, combined_msg)])
 
     def __neg__(self) -> Self:
         def inverted_factory(validator: Self):
-            validator = validator.from_validations(validator.validations)
+            validator = validator.from_validations(validator.validations())
 
             def inverted(obj: Any) -> bool:
                 return not validator.validate(obj, strategy="return_result")

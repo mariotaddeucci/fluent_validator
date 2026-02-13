@@ -109,3 +109,98 @@ class ValidatorBuilder:
         return cls.prepare().is_between(
             lower_bound, upper_bound, closed=closed, msg=msg
         )
+
+    @classmethod
+    def is_not_instance_of(
+        cls, types: Type | tuple[Type, ...], *, msg: str | None = None
+    ) -> ValidatorSpec:
+        return cls.prepare().is_not_instance_of(types, msg=msg)
+
+    @classmethod
+    def is_not_callable(cls, *, msg: str | None = None) -> ValidatorSpec:
+        return cls.prepare().is_not_callable(msg=msg)
+
+    @classmethod
+    def is_not_iterable(cls, *, msg: str | None = None) -> ValidatorSpec:
+        return cls.prepare().is_not_iterable(msg=msg)
+
+    @classmethod
+    def is_not_dataclass(cls, *, msg: str | None = None) -> ValidatorSpec:
+        return cls.prepare().is_not_dataclass(msg=msg)
+
+    @classmethod
+    def is_not_string(cls, *, msg: str | None = None) -> ValidatorSpec:
+        return cls.prepare().is_not_string(msg=msg)
+
+    @classmethod
+    def is_not_number(cls, *, msg: str | None = None) -> ValidatorSpec:
+        return cls.prepare().is_not_number(msg=msg)
+
+    @classmethod
+    def is_not_bool(cls, *, msg: str | None = None) -> ValidatorSpec:
+        return cls.prepare().is_not_bool(msg=msg)
+
+    @classmethod
+    def is_not_none(cls, *, msg: str | None = None) -> ValidatorSpec:
+        return cls.prepare().is_not_none(msg=msg)
+
+    @classmethod
+    def is_not_greater_than(cls, value: Any, *, msg: str | None = None) -> ValidatorSpec:
+        return cls.prepare().is_not_greater_than(value, msg=msg)
+
+    @classmethod
+    def is_not_gt(cls, value: Any, *, msg: str | None = None) -> ValidatorSpec:
+        return cls.prepare().is_not_gt(value, msg=msg)
+
+    @classmethod
+    def is_not_greater_or_equal(
+        cls, value: Any, *, msg: str | None = None
+    ) -> ValidatorSpec:
+        return cls.prepare().is_not_greater_or_equal(value, msg=msg)
+
+    @classmethod
+    def is_not_gte(cls, value: Any, *, msg: str | None = None) -> ValidatorSpec:
+        return cls.prepare().is_not_gte(value, msg=msg)
+
+    @classmethod
+    def is_not_equal(cls, value: Any, *, msg: str | None = None) -> ValidatorSpec:
+        return cls.prepare().is_not_equal(value, msg=msg)
+
+    @classmethod
+    def is_not_eq(cls, value: Any, *, msg: str | None = None) -> ValidatorSpec:
+        return cls.prepare().is_not_eq(value, msg=msg)
+
+    @classmethod
+    def is_not_less_than(cls, value: Any, *, msg: str | None = None) -> ValidatorSpec:
+        return cls.prepare().is_not_less_than(value, msg=msg)
+
+    @classmethod
+    def is_not_lt(cls, value: Any, *, msg: str | None = None) -> ValidatorSpec:
+        return cls.prepare().is_not_lt(value, msg=msg)
+
+    @classmethod
+    def is_not_less_or_equal(
+        cls, value: Any, *, msg: str | None = None
+    ) -> ValidatorSpec:
+        return cls.prepare().is_not_less_or_equal(value, msg=msg)
+
+    @classmethod
+    def is_not_lte(cls, value: Any, *, msg: str | None = None) -> ValidatorSpec:
+        return cls.prepare().is_not_lte(value, msg=msg)
+
+    @classmethod
+    def is_not_between(
+        cls,
+        lower_bound: Any,
+        upper_bound: Any,
+        *,
+        closed: Literal["both", "left", "right", "none"] = "both",
+        msg: str | None = None,
+    ) -> ValidatorSpec:
+        return cls.prepare().is_not_between(
+            lower_bound, upper_bound, closed=closed, msg=msg
+        )
+
+    @classmethod
+    def validations(cls) -> list[tuple[Callable[[Any], bool], str]]:
+        return cls.prepare().validations()

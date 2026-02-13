@@ -56,3 +56,17 @@ def test_spec_has_negative_methods():
 
     missing_negative_methods = desired_negative_methods - spec_methods
     assert not missing_negative_methods, f"ValidatorSpec is missing negative methods: {missing_negative_methods}"
+
+def test_builder_has_all_spec_methods():
+    ignore_methods = {
+        "from_validations",
+        "validate",
+        "validate_each",
+        "describe",
+    }
+    spec_methods = {
+        m_name for m_name in dir(ValidatorSpec) if not m_name.startswith("_")
+    }
+    missing_methods = spec_methods - set(dir(ValidatorBuilder)) - ignore_methods
+    assert not missing_methods, f"ValidatorBuilder is missing methods: {missing_methods}"
+
