@@ -110,26 +110,26 @@ Below is a table of validator builder functions and a short description of each.
 
 | Function | Description |
 |---|---|
-| `is_instance_of(types)` / `is_not_instance_of(types)` | Checks the value is an instance of the provided types. |
-| `is_callable()` / `is_not_callable()` | Checks the value is callable. |
-| `is_iterable()` / `is_not_iterable()` | Checks the value is iterable. |
-| `is_dataclass()` / `is_not_dataclass()` | Checks the value is a dataclass. |
-| `is_string()` / `is_not_string()` | Checks the value is a string. |
-| `is_number()` / `is_not_number()` | Checks the value is numeric (`int`, `float`, `Decimal`). |
-| `is_bool()` / `is_not_bool()` | Checks the value is a boolean. |
-| `is_none()` / `is_not_none()` | Checks the value is `None`. |
-| `is_greater_than(value)` / `is_not_greater_than(value)` (`is_gt`) | Checks the value is greater than `value`. |
-| `is_greater_or_equal(value)` / `is_not_greater_or_equal(value)` (`is_gte`) | Checks the value is greater than or equal to `value`. |
-| `is_equal(value)` / `is_not_equal(value)` (`is_eq`) | Checks the value is equal to `value`. |
-| `is_less_than(value)` / `is_not_less_than(value)` (`is_lt`) | Checks the value is less than `value`. |
-| `is_less_or_equal(value)` / `is_not_less_or_equal(value)` (`is_lte`) | Checks the value is less than or equal to `value`. |
-| `is_between(lower, upper, closed='both')` / `is_not_between(...)` | Checks the value is between `lower` and `upper` (closed/open according to `closed`). |
-| `contains_at_least(n)` / `contains_at_most(n)` / `contains_exactly(n)` | Checks collection size (at least/at most/exactly `n` items). |
+| `is_instance_of(types)`<br>`is_not_instance_of(types)` | Checks the value is an instance of the provided types. |
+| `is_callable()`<br>`is_not_callable()` | Checks the value is callable. |
+| `is_iterable()`<br>`is_not_iterable()` | Checks the value is iterable. |
+| `is_dataclass()`<br>`is_not_dataclass()` | Checks the value is a dataclass. |
+| `is_string()`<br>`is_not_string()` | Checks the value is a string. |
+| `is_number()`<br>`is_not_number()` | Checks the value is numeric (`int`, `float`, `Decimal`). |
+| `is_bool()`<br>`is_not_bool()` | Checks the value is a boolean. |
+| `is_none()`<br>`is_not_none()` | Checks the value is `None`. |
+| `is_greater_than(value)` (`is_gt`)<br>`is_not_greater_than(value)` | Checks the value is greater than `value`. |
+| `is_greater_or_equal(value)` (`is_gte`)<br>`is_not_greater_or_equal(value)` | Checks the value is greater than or equal to `value`. |
+| `is_equal(value)` (`is_eq`)<br>`is_not_equal(value)` | Checks the value is equal to `value`. |
+| `is_less_than(value)` (`is_lt`)<br>`is_not_less_than(value)` | Checks the value is less than `value`. |
+| `is_less_or_equal(value)` (`is_lte`)<br>`is_not_less_or_equal(value)` | Checks the value is less than or equal to `value`. |
+| `is_between(lower, upper, closed='both')`<br>`is_not_between(...)` | Checks the value is between `lower` and `upper` (closed/open according to `closed`). |
+| `contains_at_least(n)`<br>`contains_at_most(n)`<br>`contains_exactly(n)` | Checks collection size (at least/at most/exactly `n` items). |
 | `has_unique_values()` | Checks that values in a collection are unique. |
-| `is_empty()` / `is_not_empty()` | Checks if the collection/value is empty. |
-| `is_true()` / `is_not_true()` / `is_false()` / `is_not_false()` | Checks boolean `True`/`False` values. |
-| `is_in(collection)` / `is_not_in(collection)` | Checks if the value is in `collection`. |
-| `add_validation(fn, msg)` / `add_validations(list[(fn, msg)])` | Adds custom validations by providing functions and messages. |
+| `is_empty()`<br>`is_not_empty()` | Checks if the collection/value is empty. |
+| `is_true()`<br>`is_not_true()`<br>`is_false()`<br>`is_not_false()` | Checks boolean `True`/`False` values. |
+| `is_in(collection)`<br>`is_not_in(collection)` | Checks if the value is in `collection`. |
+| `add_validation(fn, msg)`<br>`add_validations(list[(fn, msg)])` | Adds custom validations by providing functions and messages. |
 
 See the function and class docstrings in the source for details and default messages.
 
