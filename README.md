@@ -2,9 +2,7 @@
 
 Fluent, composable data validation for Python — a simple, expressive API to build readable validation rules.
 
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![PyPI version](https://badge.fury.io/py/fluent-validator.svg)](https://badge.fury.io/py/fluent-validator)
-[![PyPI - Downloads](https://img.shields.io/pypi/dm/fluent-validator)](https://pypi.org/project/fluent-validator/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/fluent-validator.svg)](https://pypi.org/project/fluent-validator/)
 
 ## Overview
@@ -72,7 +70,7 @@ num_or_str = Validator.is_number() | Validator.is_string()
 num_or_str.validate("abc", strategy="return_result")  # True
 
 # Negation
-not_none = -Validator.is_none()
+not_none = ~Validator.is_none()
 not_none.validate(None, strategy="return_result")  # False
 ```
 

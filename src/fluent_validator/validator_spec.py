@@ -534,7 +534,7 @@ class ValidatorSpec:
 
         return self.from_validations([(combined_validation_fn, combined_msg)], _describe_tree=new_tree)
 
-    def __neg__(self) -> Self:
+    def __invert__(self) -> Self:
         """Return a ValidatorSpec representing the logical negation of this spec."""
 
         def inverted_factory(validator: Self):

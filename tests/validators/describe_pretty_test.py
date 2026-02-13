@@ -27,12 +27,12 @@ def test_describe_pretty_or_combination():
 
 
 def test_describe_pretty_not():
-    validator = -vb.is_number()
+    validator = ~vb.is_number()
     assert validator.describe(pretty=True) == "not 'Should be a number (rule: is_number)'"
 
 
 def test_describe_pretty_complex_and_or_not():
-    validator = (vb.is_number().is_between(10, 20) | vb.is_none()) & -vb.is_string()
+    validator = (vb.is_number().is_between(10, 20) | vb.is_none()) & ~vb.is_string()
 
     expected = (
         "(\n"
@@ -49,7 +49,7 @@ def test_describe_pretty_complex_and_or_not():
 
 
 def test_describe_pretty_not_compound():
-    validator = -vb.is_number().is_string()
+    validator = ~vb.is_number().is_string()
 
     expected = "not (\n    'Should be a number (rule: is_number)' AND\n    'Should be a string (rule: is_string)'\n)"
     assert validator.describe(pretty=True) == expected
@@ -84,7 +84,7 @@ def test_describe_pretty_multiple_and():
 
 
 def test_describe_pretty_does_not_affect_non_pretty():
-    validator = (vb.is_number() | vb.is_none()) & -vb.is_string()
+    validator = (vb.is_number() | vb.is_none()) & ~vb.is_string()
 
     non_pretty = validator.describe(pretty=False)
     assert "AND" in non_pretty
@@ -99,7 +99,7 @@ def test_describe_pretty_and_operator():
 
 
 def test_describe_pretty_not_inside_or():
-    validator = -vb.is_number().is_string() | vb.is_none()
+    validator = ~vb.is_number().is_string() | vb.is_none()
 
     expected = (
         "(\n"
