@@ -90,7 +90,6 @@ def is_not_less_or_equal(obj: Any, value: Any) -> bool:
     return not is_less_or_equal(obj, value)
 
 def is_between(
-    cls,
     obj: Any,
     lower_bound: Any,
     upper_bound: Any,
@@ -125,10 +124,9 @@ def is_between(
     )
 
 def is_not_between(
-    cls,
     obj: Any,
     lower_bound: Any,
     upper_bound: Any,
     closed: Literal["both", "left", "right", "none"] = "both",
 ) -> bool:
-    return not is_between(cls, obj, lower_bound, upper_bound, closed)
+    return not is_between(obj, lower_bound, upper_bound, closed)
