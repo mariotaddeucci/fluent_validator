@@ -1,4 +1,4 @@
-from typing import Type, Any, Callable
+from typing import Type, Any, Callable, Literal
 from functools import wraps
 from .validator_spec import ValidatorSpec
 
@@ -97,3 +97,14 @@ class ValidatorBuilder:
         cls, validations: list[tuple[Callable[[Any], bool], str]]
     ) -> ValidatorSpec:
         return cls.prepare().add_validations(validations)
+
+    @classmethod
+    def is_between(
+        cls,
+        lower_bound: Any,
+        upper_bound: Any,
+        *,
+        closed: Literal["both", "left", "right", "none"] = "both",
+        msg: str | None = None,
+    ) -> ValidatorSpec:
+        return cls.prepare().is_between(lower_bound, upper_bound, closed=closed, msg=msg)
