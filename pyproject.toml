@@ -1,0 +1,20 @@
+[project]
+name = "python-app-backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pyrefly>=0.52.0",
+    "pytest>=9.0.2",
+    "ruff>=0.15.1",
+    "taskipy>=1.14.1",
+]
+
+[tool.taskipy.tasks]
+lint = "ruff check . && ruff format --check . && pyrefly check"
+fix = "ruff check --fix . && ruff format ."
+

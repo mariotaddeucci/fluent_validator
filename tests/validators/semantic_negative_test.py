@@ -1,6 +1,7 @@
 """
 Tests for semantic negative methods (is_not_X instead of not_is_X)
 """
+
 import pytest
 
 from fluent_validator.validators.value_validator import ValueValidator
@@ -8,6 +9,7 @@ from fluent_validator.validators.type_validator import TypeValidator
 
 
 # Value Validator Semantic Negative Tests
+
 
 @pytest.mark.parametrize(
     "value,expected",
@@ -115,6 +117,7 @@ def test_is_empty(value, expected):
 
 
 # Type Validator Semantic Negative Tests
+
 
 @pytest.mark.parametrize(
     "value,dtype,expected",

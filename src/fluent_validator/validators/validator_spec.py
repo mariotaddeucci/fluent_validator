@@ -4,124 +4,171 @@ from .exceptions import ValidationError
 
 
 class ValidatorSpec:
-    def __init__(self, validations: list[tuple[Callable[[Any], bool], str]] | None = None):
+    def __init__(
+        self, validations: list[tuple[Callable[[Any], bool], str]] | None = None
+    ):
         self._validations = validations or []
 
     @classmethod
-    def from_validations(cls, validations: list[tuple[Callable[[Any], bool], str]])  -> Self:
+    def from_validations(
+        cls, validations: list[tuple[Callable[[Any], bool], str]]
+    ) -> Self:
         return cls(validations=validations)
 
     @property
     def validations(self) -> list[tuple[Callable[[Any], bool], str]]:
         return self._validations.copy()
 
-    def add_validation(self, validation_fn: Callable[[Any], bool], *, msg: str)  -> Self:
+    def add_validation(self, validation_fn: Callable[[Any], bool], *, msg: str) -> Self:
         return self.add_validations([(validation_fn, msg)])
 
-    def add_validations(self, validations: list[tuple[Callable[[Any], bool], str]])  -> Self:
+    def add_validations(
+        self, validations: list[tuple[Callable[[Any], bool], str]]
+    ) -> Self:
         return self.from_validations(self.validations + validations)
 
-    def is_instance_of(self, types: Type | tuple[Type, ...], *, msg: str | None = None)  -> Self:
+    def is_instance_of(
+        self, types: Type | tuple[Type, ...], *, msg: str | None = None
+    ) -> Self:
         msg = msg or f"object must be an instance of {types} (rule: is_instance_of)"
-        return self.add_validation(lambda obj: ValidatorFns.is_instance_of(obj, types), msg=msg)
+        return self.add_validation(
+            lambda obj: ValidatorFns.is_instance_of(obj, types), msg=msg
+        )
 
-    def is_callable(self, *, msg: str | None = None)  -> Self:
+    def is_callable(self, *, msg: str | None = None) -> Self:
         msg = msg or "object must be callable (rule: is_callable)"
         return self.add_validation(lambda obj: ValidatorFns.is_callable(obj), msg=msg)
 
-    def is_iterable(self, *, msg: str | None = None)  -> Self:
+    def is_iterable(self, *, msg: str | None = None) -> Self:
         msg = msg or "object must be iterable (rule: is_iterable)"
         return self.add_validation(lambda obj: ValidatorFns.is_iterable(obj), msg=msg)
 
-    def is_dataclass(self, *, msg: str | None = None)  -> Self:
+    def is_dataclass(self, *, msg: str | None = None) -> Self:
         msg = msg or "object must be a dataclass (rule: is_dataclass)"
         return self.add_validation(lambda obj: ValidatorFns.is_dataclass(obj), msg=msg)
 
-    def is_string(self, *, msg: str | None = None)  -> Self:
+    def is_string(self, *, msg: str | None = None) -> Self:
         msg = msg or "object must be a string (rule: is_string)"
         return self.add_validation(lambda obj: ValidatorFns.is_string(obj), msg=msg)
 
-    def is_number(self, *, msg: str | None = None)  -> Self:
+    def is_number(self, *, msg: str | None = None) -> Self:
         msg = msg or "object must be a number (rule: is_number)"
         return self.add_validation(lambda obj: ValidatorFns.is_number(obj), msg=msg)
 
-    def is_bool(self, *, msg: str | None = None)  -> Self:
+    def is_bool(self, *, msg: str | None = None) -> Self:
         msg = msg or "object must be a boolean (rule: is_bool)"
         return self.add_validation(lambda obj: ValidatorFns.is_bool(obj), msg=msg)
 
-    def is_none(self, *, msg: str | None = None)  -> Self:
+    def is_none(self, *, msg: str | None = None) -> Self:
         msg = msg or "object must be None (rule: is_none)"
         return self.add_validation(lambda obj: ValidatorFns.is_none(obj), msg=msg)
 
-    def is_greater_than(self, value: Any, *, msg: str | None = None)  -> Self:
+    def is_greater_than(self, value: Any, *, msg: str | None = None) -> Self:
         msg = msg or f"object must be greater than {value} (rule: is_greater_than)"
-        return self.add_validation(lambda obj: ValidatorFns.is_greater_than(obj, value), msg=msg)
+        return self.add_validation(
+            lambda obj: ValidatorFns.is_greater_than(obj, value), msg=msg
+        )
 
-    def is_gt(self, value: Any, *, msg: str | None = None)  -> Self:
+    def is_gt(self, value: Any, *, msg: str | None = None) -> Self:
         return self.is_greater_than(value, msg=msg)
 
-    def is_greater_than_or_equal(self, value: Any, *, msg: str | None = None)  -> Self:
-        msg = msg or f"object must be greater than or equal to {value} (rule: is_greater_than_or_equal)"
-        return self.add_validation(lambda obj: ValidatorFns.is_greater_than_or_equal(obj, value), msg=msg)
+    def is_greater_than_or_equal(self, value: Any, *, msg: str | None = None) -> Self:
+        msg = (
+            msg
+            or f"object must be greater than or equal to {value} (rule: is_greater_than_or_equal)"
+        )
+        return self.add_validation(
+            lambda obj: ValidatorFns.is_greater_than_or_equal(obj, value), msg=msg
+        )
 
-    def is_gte(self, value: Any, *, msg: str | None = None)  -> Self:
+    def is_gte(self, value: Any, *, msg: str | None = None) -> Self:
         return self.is_greater_than_or_equal(value, msg=msg)
 
-    def is_equal(self, value: Any, *, msg: str | None = None)  -> Self:
+    def is_equal(self, value: Any, *, msg: str | None = None) -> Self:
         msg = msg or f"object must be equal to {value} (rule: is_equal)"
-        return self.add_validation(lambda obj: ValidatorFns.is_equal(obj, value), msg=msg)
+        return self.add_validation(
+            lambda obj: ValidatorFns.is_equal(obj, value), msg=msg
+        )
 
-    def is_eq(self, value: Any, *, msg: str | None = None)  -> Self:
+    def is_eq(self, value: Any, *, msg: str | None = None) -> Self:
         return self.is_equal(value, msg=msg)
 
-    def is_less_than(self, value: Any, *, msg: str | None = None)  -> Self:
+    def is_less_than(self, value: Any, *, msg: str | None = None) -> Self:
         msg = msg or f"object must be less than {value} (rule: is_less_than)"
-        return self.add_validation(lambda obj: ValidatorFns.is_less_than(obj, value), msg=msg)
+        return self.add_validation(
+            lambda obj: ValidatorFns.is_less_than(obj, value), msg=msg
+        )
 
-    def is_lt(self, value: Any, *, msg: str | None = None)  -> Self:
+    def is_lt(self, value: Any, *, msg: str | None = None) -> Self:
         return self.is_less_than(value, msg=msg)
 
-    def is_less_than_or_equal(self, value: Any, *, msg: str | None = None)  -> Self:
-        msg = msg or f"object must be less than or equal to {value} (rule: is_less_than_or_equal)"
-        return self.add_validation(lambda obj: ValidatorFns.is_less_than_or_equal(obj, value), msg=msg)
+    def is_less_than_or_equal(self, value: Any, *, msg: str | None = None) -> Self:
+        msg = (
+            msg
+            or f"object must be less than or equal to {value} (rule: is_less_than_or_equal)"
+        )
+        return self.add_validation(
+            lambda obj: ValidatorFns.is_less_than_or_equal(obj, value), msg=msg
+        )
 
-    def is_lte(self, value: Any, *, msg: str | None = None)  -> Self:
+    def is_lte(self, value: Any, *, msg: str | None = None) -> Self:
         return self.is_less_than_or_equal(value, msg=msg)
 
-    def is_between(self, lower_bound: Any, upper_bound: Any, *, closed: Literal["both", "left", "right", "none"] = "both", msg: str | None = None)  -> Self:
-        msg = msg or f"object must be between {lower_bound} and {upper_bound} (closed='{closed}') (rule: is_between)"
-        return self.add_validation(lambda obj: ValidatorFns.is_between(obj, lower_bound, upper_bound, closed), msg=msg)
+    def is_between(
+        self,
+        lower_bound: Any,
+        upper_bound: Any,
+        *,
+        closed: Literal["both", "left", "right", "none"] = "both",
+        msg: str | None = None,
+    ) -> Self:
+        msg = (
+            msg
+            or f"object must be between {lower_bound} and {upper_bound} (closed='{closed}') (rule: is_between)"
+        )
+        return self.add_validation(
+            lambda obj: ValidatorFns.is_between(obj, lower_bound, upper_bound, closed),
+            msg=msg,
+        )
 
-
-    def __and__(self, other: "ValidatorSpec")  -> Self:
+    def __and__(self, other: "ValidatorSpec") -> Self:
         if not isinstance(other, ValidatorSpec):
             return NotImplemented
 
         return self.add_validations(other.validations)
 
-    def __or__(self, other: "ValidatorSpec")  -> Self:
+    def __or__(self, other: "ValidatorSpec") -> Self:
         if not isinstance(other, ValidatorSpec):
             return NotImplemented
-        def combined_validation_factory(validations1: list[tuple[Callable[[Any], bool], str]], validations2: list[tuple[Callable[[Any], bool], str]]) -> Callable[[Any], bool]:
+
+        def combined_validation_factory(
+            validations1: list[tuple[Callable[[Any], bool], str]],
+            validations2: list[tuple[Callable[[Any], bool], str]],
+        ) -> Callable[[Any], bool]:
             def combined_validation(obj: Any) -> bool:
-                return all(validation_fn(obj) for validation_fn, _ in validations1) or all(validation_fn(obj) for validation_fn, _ in validations2)
+                return all(
+                    validation_fn(obj) for validation_fn, _ in validations1
+                ) or all(validation_fn(obj) for validation_fn, _ in validations2)
+
             return combined_validation
 
-        combined_validation_fn = combined_validation_factory(self.validations, other.validations)
+        combined_validation_fn = combined_validation_factory(
+            self.validations, other.validations
+        )
         combined_msg = f"object must satisfy either: ({' and '.join(msg for _, msg in self.validations)}) or ({' and '.join(msg for _, msg in other.validations)}) (rule: or)"
         return self.from_validations([(combined_validation_fn, combined_msg)])
 
-
-    def __neg__(self)  -> Self:
+    def __neg__(self) -> Self:
         def inverted_factory(validator: Self):
             validator = validator.from_validations(validator.validations)
+
             def inverted(obj: Any) -> bool:
                 return not validator.validate(obj, strategy="return_result")
+
             msg = f"NOT({validator.describe()})"
             return inverted, msg
 
         return self.from_validations([inverted_factory(self)])
-
 
     def describe(self, pretty: bool = False) -> str:
         if pretty:
@@ -130,8 +177,14 @@ class ValidatorSpec:
             return "No validations"
         return " AND ".join(msg for _, msg in self._validations)
 
-
-    def validate(self, obj: Any, *, strategy: Literal["raise_after_first_error", "raise_after_all_errors", "return_result"] = "raise_after_first_error") -> bool:
+    def validate(
+        self,
+        obj: Any,
+        *,
+        strategy: Literal[
+            "raise_after_first_error", "raise_after_all_errors", "return_result"
+        ] = "raise_after_first_error",
+    ) -> bool:
         errors = []
         for validation_fn, msg in self._validations:
             if not validation_fn(obj):
@@ -147,7 +200,14 @@ class ValidatorSpec:
 
         return not errors
 
-    def validate_each(self, iterable: Iterable[Any], *, strategy: Literal["raise_after_first_error", "raise_after_all_errors", "return_result"] = "raise_after_first_error") -> bool:
+    def validate_each(
+        self,
+        iterable: Iterable[Any],
+        *,
+        strategy: Literal[
+            "raise_after_first_error", "raise_after_all_errors", "return_result"
+        ] = "raise_after_first_error",
+    ) -> bool:
         errors = []
         for index, item in enumerate(iterable):
             try:

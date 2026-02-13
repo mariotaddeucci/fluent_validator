@@ -9,7 +9,9 @@ class ValidatorBuilder:
         return ValidatorSpec()
 
     @classmethod
-    def is_instance_of(cls, types: Type | tuple[Type, ...], *, msg: str | None = None) -> ValidatorSpec:
+    def is_instance_of(
+        cls, types: Type | tuple[Type, ...], *, msg: str | None = None
+    ) -> ValidatorSpec:
         return cls.prepare().is_instance_of(types, msg=msg)
 
     @wraps(ValidatorSpec.is_callable)
@@ -50,7 +52,9 @@ class ValidatorBuilder:
         return cls.prepare().is_gt(value, msg=msg)
 
     @classmethod
-    def is_greater_than_or_equal(cls, value: Any, *, msg: str | None = None) -> ValidatorSpec:
+    def is_greater_than_or_equal(
+        cls, value: Any, *, msg: str | None = None
+    ) -> ValidatorSpec:
         return cls.prepare().is_greater_than_or_equal(value, msg=msg)
 
     @classmethod
@@ -74,7 +78,9 @@ class ValidatorBuilder:
         return cls.prepare().is_lt(value, msg=msg)
 
     @classmethod
-    def is_less_than_or_equal(cls, value: Any, *, msg: str | None = None) -> ValidatorSpec:
+    def is_less_than_or_equal(
+        cls, value: Any, *, msg: str | None = None
+    ) -> ValidatorSpec:
         return cls.prepare().is_less_than_or_equal(value, msg=msg)
 
     @classmethod
@@ -82,9 +88,13 @@ class ValidatorBuilder:
         return cls.prepare().is_lte(value, msg=msg)
 
     @classmethod
-    def add_validation(cls, validation_fn: Callable[[Any], bool], *, msg: str) -> ValidatorSpec:
+    def add_validation(
+        cls, validation_fn: Callable[[Any], bool], *, msg: str
+    ) -> ValidatorSpec:
         return cls.prepare().add_validation(validation_fn, msg=msg)
 
     @classmethod
-    def add_validations(cls, validations: list[tuple[Callable[[Any], bool], str]]) -> ValidatorSpec:
+    def add_validations(
+        cls, validations: list[tuple[Callable[[Any], bool], str]]
+    ) -> ValidatorSpec:
         return cls.prepare().add_validations(validations)

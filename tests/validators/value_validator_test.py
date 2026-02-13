@@ -1,5 +1,4 @@
 import pytest
-
 from fluent_validator.validators.value_validator import ValueValidator
 
 
@@ -29,11 +28,6 @@ def test_is_true(value, expected):
 def test_is_false(value, expected):
     validator = ValueValidator(value)
     assert validator._is_false() is expected
-
-
-import pytest
-
-from fluent_validator.validators.value_validator import ValueValidator
 
 
 @pytest.mark.parametrize(

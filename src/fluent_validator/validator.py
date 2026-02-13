@@ -8,10 +8,10 @@ class Validator(ValueValidator):
     def __getattr__(self, fn_name):
         # Check for old style negation: not_is_X -> negate _is_X
         is_old_style_negative = fn_name.startswith("not_")
-        
+
         # Check for new semantic style: is_not_X -> use _is_not_X directly
         is_semantic_negative = fn_name.startswith("is_not_")
-        
+
         if is_semantic_negative:
             # For semantic style (is_not_X), map directly to _is_not_X
             validation_name = f"_{fn_name}"
