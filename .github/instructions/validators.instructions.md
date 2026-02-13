@@ -22,7 +22,7 @@ Follow these strict rules when creating validators:
 
 4. Tests (MANDATORY)
 - Create tests in `tests/validators`.
-- File name: `test_<positive_validator>.py`
+- File name: `<positive_validator>_test.py`
   - Example: `is_none` → `test_is_none.py`
 - Test BOTH positive and negative validators.
 - Use `strategy="return_result"` in assertions.
