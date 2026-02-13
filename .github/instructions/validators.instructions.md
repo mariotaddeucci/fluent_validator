@@ -1,20 +1,20 @@
 ---
-applyTo: "src/fluent_validator/validators/**/*.py,tests/validators/**/*.py"
+applyTo: "src/fluent_validator/validators/functions.py,tests/validators/**/*.py"
 description: "Rules for implementing validators in Fluent Validator (Python)."
 name: "Fluent Validator - Python Validators Rules"
 ---
 
 Follow these strict rules when creating validators:
 
-1. ValidatorFns
-- Implement validation logic only in `ValidatorFns`.
-- Implement ONLY positive checks (e.g., `is_none`, NOT `is_not_none`).
-- Keep methods static and composable.
+1. Functions
+- Implement validation logic only in `functions.py`.
+- Implement the positive and negative checks (e.g., `is_none` and `is_not_none`).
+- Keep functions static and composable.
 
 2. ValidatorSpec
-- Map each function from `ValidatorFns` to a `ValidatorSpec`.
+- Map each function from `functions.py` to a `ValidatorSpec`.
 - Error messages MUST use format placeholders for parameters (e.g., "Value must be greater than {threshold}").
-- ALWAYS implement the negative version in `ValidatorSpec` (e.g., `is_not_none` for `is_none`).
+- ALWAYS implement the positive and negative version in `ValidatorSpec` (e.g., `is_not_none` and `is_none`).
 
 3. ValidatorBuilder
 - Expose validators through `ValidatorBuilder`.
@@ -30,7 +30,6 @@ Follow these strict rules when creating validators:
   - Valid cases
   - Invalid cases
   - Edge cases
-  - Error message formatting (when applicable)
 
 Example pattern:
 
@@ -46,6 +45,5 @@ def test_is_example():
     assert validator_negative.validate(value, strategy="return_result") is False
 
 Do not:
-- Implement negative logic inside `ValidatorFns`.
 - Skip negative specs.
 - Skip test coverage.
