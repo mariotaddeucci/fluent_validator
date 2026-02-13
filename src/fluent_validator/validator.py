@@ -1,17 +1,17 @@
 """Convenience fluent builder exposing ValidatorSpec factory methods.
 
-This module exposes ValidatorBuilder, which provides classmethods that
+This module exposes Validator, which provides classmethods that
 create configured :class:`~fluent_validator.validator_spec.ValidatorSpec`
 instances for common validations.
 """
 
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
 from typing import Any, Literal
 
 from .validator_spec import ValidatorSpec
 
 
-class ValidatorBuilder:
+class Validator:
     """Fluent factory for creating :class:`ValidatorSpec` validators.
 
     Each classmethod returns a fresh ValidatorSpec pre-configured with the
@@ -513,4 +513,64 @@ class ValidatorBuilder:
             closed=closed,
             msg=msg,
         )
+
+    @classmethod
+    def contains_at_least(cls, value: int, *, msg: str | None = None) -> ValidatorSpec:
+        """Create a ValidatorSpec that checks iterable contains at least ``value`` elements."""
+        return cls.prepare().contains_at_least(value, msg=msg)
+
+    @classmethod
+    def contains_at_most(cls, value: int, *, msg: str | None = None) -> ValidatorSpec:
+        """Create a ValidatorSpec that checks iterable contains at most ``value`` elements."""
+        return cls.prepare().contains_at_most(value, msg=msg)
+
+    @classmethod
+    def contains_exactly(cls, value: int, *, msg: str | None = None) -> ValidatorSpec:
+        """Create a ValidatorSpec that checks iterable contains exactly ``value`` elements."""
+        return cls.prepare().contains_exactly(value, msg=msg)
+
+    @classmethod
+    def has_unique_values(cls, *, msg: str | None = None) -> ValidatorSpec:
+        """Create a ValidatorSpec that checks iterable has unique values."""
+        return cls.prepare().has_unique_values(msg=msg)
+
+    @classmethod
+    def is_empty(cls, *, msg: str | None = None) -> ValidatorSpec:
+        """Create a ValidatorSpec that checks a value is empty (or None)."""
+        return cls.prepare().is_empty(msg=msg)
+
+    @classmethod
+    def is_not_empty(cls, *, msg: str | None = None) -> ValidatorSpec:
+        """Create a ValidatorSpec that checks a value is not empty."""
+        return cls.prepare().is_not_empty(msg=msg)
+
+    @classmethod
+    def is_false(cls, *, msg: str | None = None) -> ValidatorSpec:
+        """Create a ValidatorSpec that checks a value is the boolean False."""
+        return cls.prepare().is_false(msg=msg)
+
+    @classmethod
+    def is_not_false(cls, *, msg: str | None = None) -> ValidatorSpec:
+        """Create a ValidatorSpec that checks a value is not the boolean False."""
+        return cls.prepare().is_not_false(msg=msg)
+
+    @classmethod
+    def is_true(cls, *, msg: str | None = None) -> ValidatorSpec:
+        """Create a ValidatorSpec that checks a value is the boolean True."""
+        return cls.prepare().is_true(msg=msg)
+
+    @classmethod
+    def is_not_true(cls, *, msg: str | None = None) -> ValidatorSpec:
+        """Create a ValidatorSpec that checks a value is not the boolean True."""
+        return cls.prepare().is_not_true(msg=msg)
+
+    @classmethod
+    def is_in(cls, collection: Iterable, *, msg: str | None = None) -> ValidatorSpec:
+        """Create a ValidatorSpec that checks a value is in the provided collection."""
+        return cls.prepare().is_in(collection, msg=msg)
+
+    @classmethod
+    def is_not_in(cls, collection: Iterable, *, msg: str | None = None) -> ValidatorSpec:
+        """Create a ValidatorSpec that checks a value is not in the provided collection."""
+        return cls.prepare().is_not_in(collection, msg=msg)
 

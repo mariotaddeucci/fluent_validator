@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from fluent_validator import ValidatorBuilder as vb
+from fluent_validator import Validator as vb
 
 
 @dataclass

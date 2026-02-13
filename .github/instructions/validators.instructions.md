@@ -16,8 +16,8 @@ Follow these strict rules when creating validators:
 - Error messages MUST use format placeholders for parameters (e.g., "Value must be greater than {threshold}").
 - ALWAYS implement the positive and negative version in `ValidatorSpec` (e.g., `is_not_none` and `is_none`).
 
-3. ValidatorBuilder
-- Expose validators through `ValidatorBuilder`.
+3. Validator
+- Expose validators through `Validator`.
 - Provide BOTH positive and negative versions.
 
 4. Tests (MANDATORY)
@@ -33,7 +33,7 @@ Follow these strict rules when creating validators:
 
 Example pattern:
 
-from fluent_validator import ValidatorBuilder as vb
+from fluent_validator import Validator as vb
 
 def test_is_example():
     value = ...

@@ -1,4 +1,4 @@
-from fluent_validator import ValidatorBuilder as vb
+from fluent_validator import Validator as vb
 
 
 def test_is_callable():

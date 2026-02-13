@@ -1,7 +1,7 @@
 """Predicate functions for fluent_validator.
 
 These are simple, composable boolean predicate helpers used by ValidatorSpec and
-ValidatorBuilder. Each function returns True when the predicate matches the
+Validator. Each function returns True when the predicate matches the
 provided value; negative counterparts are also provided.
 """
 
@@ -245,3 +245,117 @@ def is_not_between(
 ) -> bool:
     """Return True if ``obj`` is not between the provided bounds."""
     return not is_between(obj, lower_bound, upper_bound, closed)
+
+
+def contains_at_least(obj: Any, count: int) -> bool:
+    """Return True if the iterable ``obj`` contains at least ``count`` elements."""
+    if obj is None:
+        return False
+    try:
+        return len(obj) >= count
+    except TypeError:
+        # not sized; iterate until count is reached
+        c = 0
+        for _ in obj:
+            c += 1
+            if c >= count:
+                return True
+        return False
+
+
+def contains_at_most(obj: Any, count: int) -> bool:
+    """Return True if the iterable ``obj`` contains at most ``count`` elements."""
+    if obj is None:
+        return False
+    try:
+        return len(obj) <= count
+    except TypeError:
+        c = 0
+        for _ in obj:
+            c += 1
+            if c > count:
+                return False
+        return True
+
+
+def contains_exactly(obj: Any, count: int) -> bool:
+    """Return True if the iterable ``obj`` contains exactly ``count`` elements."""
+    if obj is None:
+        return False
+    try:
+        return len(obj) == count
+    except TypeError:
+        c = 0
+        for _ in obj:
+            c += 1
+        return c == count
+
+
+def has_unique_values(obj: Any) -> bool:
+    """Return True if the iterable ``obj`` contains only unique values."""
+    if obj is None:
+        return False
+    try:
+        items = list(obj)
+    except TypeError:
+        return False
+
+    try:
+        return len(set(items)) == len(items)
+    except TypeError:
+        # some elements may be unhashable; fall back to O(n^2) equality check
+        seen: list = []
+        for item in items:
+            for s in seen:
+                if item == s:
+                    return False
+            seen.append(item)
+        return True
+
+
+def is_empty(obj: Any) -> bool:
+    """Return True if ``obj`` is empty (length 0) or is None."""
+    if obj is None:
+        return True
+    try:
+        return len(obj) == 0
+    except TypeError:
+        return False
+
+
+def is_not_empty(obj: Any) -> bool:
+    """Return True if ``obj`` is not empty."""
+    return not is_empty(obj)
+
+
+def is_false(obj: Any) -> bool:
+    """Return True if ``obj`` is a boolean and is False."""
+    return is_bool(obj) and obj is False
+
+
+def is_not_false(obj: Any) -> bool:
+    """Return True if ``obj`` is not the boolean False."""
+    return not is_false(obj)
+
+
+def is_true(obj: Any) -> bool:
+    """Return True if ``obj`` is a boolean and is True."""
+    return is_bool(obj) and obj is True
+
+
+def is_not_true(obj: Any) -> bool:
+    """Return True if ``obj`` is not the boolean True."""
+    return not is_true(obj)
+
+
+def is_in(obj: Any, collection: Iterable) -> bool:
+    """Return True if ``obj`` is contained in ``collection``."""
+    try:
+        return obj in collection
+    except Exception:
+        return False
+
+
+def is_not_in(obj: Any, collection: Iterable) -> bool:
+    """Return True if ``obj`` is not contained in ``collection``."""
+    return not is_in(obj, collection)

@@ -311,6 +311,66 @@ class ValidatorSpec:
         msg = msg or f"Should not be between {lower_bound} and {upper_bound} (closed='{closed}') (rule: is_not_between)"
         return self.add_validation(lambda obj: F.is_not_between(obj, lower_bound, upper_bound, closed), msg=msg)
 
+    def contains_at_least(self, value: int, *, msg: str | None = None) -> Self:
+        """Add a validation that asserts the iterable contains at least ``value`` elements."""
+        msg = msg or f"Should contain at least {value} elements (rule: contains_at_least)"
+        return self.add_validation(lambda obj: F.contains_at_least(obj, value), msg=msg)
+
+    def contains_at_most(self, value: int, *, msg: str | None = None) -> Self:
+        """Add a validation that asserts the iterable contains at most ``value`` elements."""
+        msg = msg or f"Should contain at most {value} elements (rule: contains_at_most)"
+        return self.add_validation(lambda obj: F.contains_at_most(obj, value), msg=msg)
+
+    def contains_exactly(self, value: int, *, msg: str | None = None) -> Self:
+        """Add a validation that asserts the iterable contains exactly ``value`` elements."""
+        msg = msg or f"Should contain exactly {value} elements (rule: contains_exactly)"
+        return self.add_validation(lambda obj: F.contains_exactly(obj, value), msg=msg)
+
+    def has_unique_values(self, *, msg: str | None = None) -> Self:
+        """Add a validation that asserts the iterable has unique values."""
+        msg = msg or "Should have unique values (rule: has_unique_values)"
+        return self.add_validation(lambda obj: F.has_unique_values(obj), msg=msg)
+
+    def is_empty(self, *, msg: str | None = None) -> Self:
+        """Add a validation that asserts the object is empty (or None)."""
+        msg = msg or "Should be empty (rule: is_empty)"
+        return self.add_validation(lambda obj: F.is_empty(obj), msg=msg)
+
+    def is_not_empty(self, *, msg: str | None = None) -> Self:
+        """Add a validation that asserts the object is not empty."""
+        msg = msg or "Should not be empty (rule: is_not_empty)"
+        return self.add_validation(lambda obj: F.is_not_empty(obj), msg=msg)
+
+    def is_false(self, *, msg: str | None = None) -> Self:
+        """Add a validation that asserts the object is the boolean False."""
+        msg = msg or "Should be False (rule: is_false)"
+        return self.add_validation(lambda obj: F.is_false(obj), msg=msg)
+
+    def is_not_false(self, *, msg: str | None = None) -> Self:
+        """Add a validation that asserts the object is not the boolean False."""
+        msg = msg or "Should not be False (rule: is_not_false)"
+        return self.add_validation(lambda obj: F.is_not_false(obj), msg=msg)
+
+    def is_true(self, *, msg: str | None = None) -> Self:
+        """Add a validation that asserts the object is the boolean True."""
+        msg = msg or "Should be True (rule: is_true)"
+        return self.add_validation(lambda obj: F.is_true(obj), msg=msg)
+
+    def is_not_true(self, *, msg: str | None = None) -> Self:
+        """Add a validation that asserts the object is not the boolean True."""
+        msg = msg or "Should not be True (rule: is_not_true)"
+        return self.add_validation(lambda obj: F.is_not_true(obj), msg=msg)
+
+    def is_in(self, collection: Iterable, *, msg: str | None = None) -> Self:
+        """Add a validation that asserts the object is in the provided collection."""
+        msg = msg or f"Should be in {collection} (rule: is_in)"
+        return self.add_validation(lambda obj: F.is_in(obj, collection), msg=msg)
+
+    def is_not_in(self, collection: Iterable, *, msg: str | None = None) -> Self:
+        """Add a validation that asserts the object is not in the provided collection."""
+        msg = msg or f"Should not be in {collection} (rule: is_not_in)"
+        return self.add_validation(lambda obj: F.is_not_in(obj, collection), msg=msg)
+
     def _render_pretty(self, node: tuple | None, indent: int = 0, *, is_top_level: bool = True) -> str:
         """Render the describe tree into a human-friendly string with indentation."""
         if node is None:
