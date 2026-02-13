@@ -62,6 +62,6 @@ extend-unsafe-fixes = [
 
 
 [tool.taskipy.tasks]
-fix = "ruff check --fix . && ruff format . && ssort"
+fix = "ruff check --fix --unsafe-fixes . && ruff format . && ssort"
 lint = "ruff check . && ruff format --check . && pyrefly check && ssort --check"
 test = "pytest"

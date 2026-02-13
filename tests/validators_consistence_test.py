@@ -41,6 +41,7 @@ def test_builder_has_all_spec_methods():
         "from_validations",
         "validate",
         "validate_each",
+        "validations",
         "describe",
     }
     spec_methods = {m_name for m_name in dir(ValidatorSpec) if not m_name.startswith("_")}
