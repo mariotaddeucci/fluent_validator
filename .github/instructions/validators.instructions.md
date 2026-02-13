@@ -1,5 +1,5 @@
 ---
-applyTo: "src/fluent_validator/validators/functions.py,tests/validators/**/*.py"
+applyTo: "src/fluent_validator/functions.py,tests/validators/**/*.py"
 description: "Rules for implementing validators in Fluent Validator (Python)."
 name: "Fluent Validator - Python Validators Rules"
 ---
