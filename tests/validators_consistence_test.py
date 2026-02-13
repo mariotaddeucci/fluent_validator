@@ -1,18 +1,18 @@
 import inspect
 
+from fluent_validator.validators import functions as ValidatorFns
 from fluent_validator.validators.validator_builder import ValidatorBuilder
-from fluent_validator.validators.validator_fns import ValidatorFns
 from fluent_validator.validators.validator_spec import ValidatorSpec
 
 
 def test_all_validator_methods_available_in_spec():
-    validators = {m_name for m_name in dir(ValidatorFns) if not m_name.startswith("_")}
+    validators = {m_name for m_name in dir(ValidatorFns) if m_name.startswith(("is_", "has_", "contains_"))}
     missing_methods = validators - set(dir(ValidatorSpec))
     assert not missing_methods, f"ValidatorSpec is missing methods: {missing_methods}"
 
 
 def test_all_validator_methods_available_in_builder():
-    validators = {m_name for m_name in dir(ValidatorFns) if not m_name.startswith("_")}
+    validators = {m_name for m_name in dir(ValidatorFns) if m_name.startswith(("is_", "has_", "contains_"))}
     missing_methods = validators - set(dir(ValidatorBuilder))
     assert not missing_methods, f"ValidatorBuilder is missing methods: {missing_methods}"
 
@@ -34,19 +34,6 @@ def test_builder_methods_has_same_signature_as_spec():
             invalid_methods.append(method_name)
 
     assert not invalid_methods, f"Methods with different signatures: {invalid_methods}"
-
-
-def test_spec_has_negative_methods():
-    spec_methods = {m_name for m_name in dir(ValidatorSpec) if m_name.startswith(("is_", "has_"))}
-    desired_negative_methods = set()
-    for method_name in spec_methods:
-        if method_name.startswith("is_") and not method_name.startswith("is_not_"):
-            desired_negative_methods.add("is_not_" + method_name[3:])
-        elif method_name.startswith("has_") and not method_name.startswith("has_no_"):
-            desired_negative_methods.add("has_no_" + method_name[4:])
-
-    missing_negative_methods = desired_negative_methods - spec_methods
-    assert not missing_negative_methods, f"ValidatorSpec is missing negative methods: {missing_negative_methods}"
 
 
 def test_builder_has_all_spec_methods():

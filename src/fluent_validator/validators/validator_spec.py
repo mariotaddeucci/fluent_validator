@@ -1,8 +1,9 @@
 from collections.abc import Callable, Iterable
 from typing import Any, Literal, Self
 
+from fluent_validator.validators import functions as F
+
 from .exceptions import ValidationError
-from .validator_fns import ValidatorFns
 
 
 class ValidatorSpec:
@@ -63,9 +64,9 @@ class ValidatorSpec:
         *,
         msg: str | None = None,
     ) -> Self:
-        msg = msg or f"object should be an instance of {types} (rule: is_instance_of)"
+        msg = msg or f"Should be an instance of {types} (rule: is_instance_of)"
         return self.add_validation(
-            lambda obj: ValidatorFns.is_instance_of(obj, types),
+            lambda obj: F.is_instance_of(obj, types),
             msg=msg,
         )
 
@@ -75,90 +76,87 @@ class ValidatorSpec:
         *,
         msg: str | None = None,
     ) -> Self:
-        msg = msg or f"object should not be an instance of {types} (rule: is_not_instance_of)"
+        msg = msg or f"Should not be an instance of {types} (rule: is_not_instance_of)"
         return self.add_validation(
-            lambda obj: not ValidatorFns.is_instance_of(obj, types),
+            lambda obj: F.is_not_instance_of(obj, types),
             msg=msg,
         )
 
     def is_callable(self, *, msg: str | None = None) -> Self:
-        msg = msg or "object should be callable (rule: is_callable)"
-        return self.add_validation(lambda obj: ValidatorFns.is_callable(obj), msg=msg)
+        msg = msg or "Should be callable (rule: is_callable)"
+        return self.add_validation(lambda obj: F.is_callable(obj), msg=msg)
 
     def is_not_callable(self, *, msg: str | None = None) -> Self:
-        msg = msg or "object should not be callable (rule: is_not_callable)"
+        msg = msg or "Should not be callable (rule: is_not_callable)"
         return self.add_validation(
-            lambda obj: not ValidatorFns.is_callable(obj),
+            lambda obj: F.is_not_callable(obj),
             msg=msg,
         )
 
     def is_iterable(self, *, msg: str | None = None) -> Self:
-        msg = msg or "object should be iterable (rule: is_iterable)"
-        return self.add_validation(lambda obj: ValidatorFns.is_iterable(obj), msg=msg)
+        msg = msg or "Should be iterable (rule: is_iterable)"
+        return self.add_validation(lambda obj: F.is_iterable(obj), msg=msg)
 
     def is_not_iterable(self, *, msg: str | None = None) -> Self:
-        msg = msg or "object should not be iterable (rule: is_not_iterable)"
+        msg = msg or "Should not be iterable (rule: is_not_iterable)"
         return self.add_validation(
-            lambda obj: not ValidatorFns.is_iterable(obj),
+            lambda obj: F.is_not_iterable(obj),
             msg=msg,
         )
 
     def is_dataclass(self, *, msg: str | None = None) -> Self:
-        msg = msg or "object should be a dataclass (rule: is_dataclass)"
-        return self.add_validation(lambda obj: ValidatorFns.is_dataclass(obj), msg=msg)
+        msg = msg or "Should be a dataclass (rule: is_dataclass)"
+        return self.add_validation(lambda obj: F.is_dataclass(obj), msg=msg)
 
     def is_not_dataclass(self, *, msg: str | None = None) -> Self:
-        msg = msg or "object should not be a dataclass (rule: is_not_dataclass)"
+        msg = msg or "Should not be a dataclass (rule: is_not_dataclass)"
         return self.add_validation(
-            lambda obj: not ValidatorFns.is_dataclass(obj),
+            lambda obj: F.is_not_dataclass(obj),
             msg=msg,
         )
 
     def is_string(self, *, msg: str | None = None) -> Self:
-        msg = msg or "object should be a string (rule: is_string)"
-        return self.add_validation(lambda obj: ValidatorFns.is_string(obj), msg=msg)
+        msg = msg or "Should be a string (rule: is_string)"
+        return self.add_validation(lambda obj: F.is_string(obj), msg=msg)
 
     def is_not_string(self, *, msg: str | None = None) -> Self:
-        msg = msg or "object should not be a string (rule: is_not_string)"
-        return self.add_validation(lambda obj: not ValidatorFns.is_string(obj), msg=msg)
+        msg = msg or "Should not be a string (rule: is_not_string)"
+        return self.add_validation(lambda obj: F.is_not_string(obj), msg=msg)
 
     def is_number(self, *, msg: str | None = None) -> Self:
-        msg = msg or "object should be a number (rule: is_number)"
-        return self.add_validation(lambda obj: ValidatorFns.is_number(obj), msg=msg)
+        msg = msg or "Should be a number (rule: is_number)"
+        return self.add_validation(lambda obj: F.is_number(obj), msg=msg)
 
     def is_not_number(self, *, msg: str | None = None) -> Self:
-        msg = msg or "object should not be a number (rule: is_not_number)"
-        return self.add_validation(lambda obj: not ValidatorFns.is_number(obj), msg=msg)
+        msg = msg or "Should not be a number (rule: is_not_number)"
+        return self.add_validation(lambda obj: F.is_not_number(obj), msg=msg)
 
     def is_bool(self, *, msg: str | None = None) -> Self:
-        msg = msg or "object should be a boolean (rule: is_bool)"
-        return self.add_validation(lambda obj: ValidatorFns.is_bool(obj), msg=msg)
+        msg = msg or "Should be a boolean (rule: is_bool)"
+        return self.add_validation(lambda obj: F.is_bool(obj), msg=msg)
 
     def is_not_bool(self, *, msg: str | None = None) -> Self:
-        msg = msg or "object should not be a boolean (rule: is_not_bool)"
-        return self.add_validation(lambda obj: not ValidatorFns.is_bool(obj), msg=msg)
+        msg = msg or "Should not be a boolean (rule: is_not_bool)"
+        return self.add_validation(lambda obj: F.is_not_bool(obj), msg=msg)
 
     def is_none(self, *, msg: str | None = None) -> Self:
-        msg = msg or "object should be None (rule: is_none)"
-        return self.add_validation(lambda obj: ValidatorFns.is_none(obj), msg=msg)
+        msg = msg or "Should be None (rule: is_none)"
+        return self.add_validation(lambda obj: F.is_none(obj), msg=msg)
 
     def is_not_none(self, *, msg: str | None = None) -> Self:
-        msg = msg or "object should not be None (rule: is_not_none)"
-        return self.add_validation(lambda obj: not ValidatorFns.is_none(obj), msg=msg)
+        msg = msg or "Should not be None (rule: is_not_none)"
+        return self.add_validation(lambda obj: F.is_not_none(obj), msg=msg)
 
     def is_greater_than(self, value: Any, *, msg: str | None = None) -> Self:
-        msg = msg or f"object should be greater than {value} (rule: is_greater_than)"
+        msg = msg or f"Should be greater than {value} (rule: is_greater_than)"
         return self.add_validation(
-            lambda obj: ValidatorFns.is_greater_than(obj, value),
+            lambda obj: F.is_greater_than(obj, value),
             msg=msg,
         )
 
     def is_not_greater_than(self, value: Any, *, msg: str | None = None) -> Self:
-        msg = msg or f"object should not be greater than {value} (rule: is_not_greater_than)"
-        return self.add_validation(
-            lambda obj: not ValidatorFns.is_greater_than(obj, value),
-            msg=msg,
-        )
+        msg = msg or f"Should not be greater than {value} (rule: is_not_greater_than)"
+        return self.add_validation(lambda obj: F.is_not_greater_than(obj, value), msg=msg)
 
     def is_gt(self, value: Any, *, msg: str | None = None) -> Self:
         return self.is_greater_than(value, msg=msg)
@@ -167,18 +165,15 @@ class ValidatorSpec:
         return self.is_not_greater_than(value, msg=msg)
 
     def is_greater_or_equal(self, value: Any, *, msg: str | None = None) -> Self:
-        msg = msg or f"object should be greater than or equal to {value} (rule: is_greater_or_equal)"
+        msg = msg or f"Should be greater than or equal to {value} (rule: is_greater_or_equal)"
         return self.add_validation(
-            lambda obj: ValidatorFns.is_greater_or_equal(obj, value),
+            lambda obj: F.is_greater_or_equal(obj, value),
             msg=msg,
         )
 
     def is_not_greater_or_equal(self, value: Any, *, msg: str | None = None) -> Self:
-        msg = msg or f"object should not be greater than or equal to {value} (rule: is_not_greater_or_equal)"
-        return self.add_validation(
-            lambda obj: not ValidatorFns.is_greater_or_equal(obj, value),
-            msg=msg,
-        )
+        msg = msg or f"Should not be greater than or equal to {value} (rule: is_not_greater_or_equal)"
+        return self.add_validation(lambda obj: F.is_not_greater_or_equal(obj, value), msg=msg)
 
     def is_gte(self, value: Any, *, msg: str | None = None) -> Self:
         return self.is_greater_or_equal(value, msg=msg)
@@ -187,18 +182,15 @@ class ValidatorSpec:
         return self.is_not_greater_or_equal(value, msg=msg)
 
     def is_equal(self, value: Any, *, msg: str | None = None) -> Self:
-        msg = msg or f"object should be equal to {value} (rule: is_equal)"
+        msg = msg or f"Should be equal to {value} (rule: is_equal)"
         return self.add_validation(
-            lambda obj: ValidatorFns.is_equal(obj, value),
+            lambda obj: F.is_equal(obj, value),
             msg=msg,
         )
 
     def is_not_equal(self, value: Any, *, msg: str | None = None) -> Self:
-        msg = msg or f"object should not be equal to {value} (rule: is_not_equal)"
-        return self.add_validation(
-            lambda obj: not ValidatorFns.is_equal(obj, value),
-            msg=msg,
-        )
+        msg = msg or f"Should not be equal to {value} (rule: is_not_equal)"
+        return self.add_validation(lambda obj: F.is_not_equal(obj, value), msg=msg)
 
     def is_eq(self, value: Any, *, msg: str | None = None) -> Self:
         return self.is_equal(value, msg=msg)
@@ -207,18 +199,15 @@ class ValidatorSpec:
         return self.is_not_equal(value, msg=msg)
 
     def is_less_than(self, value: Any, *, msg: str | None = None) -> Self:
-        msg = msg or f"object should be less than {value} (rule: is_less_than)"
+        msg = msg or f"Should be less than {value} (rule: is_less_than)"
         return self.add_validation(
-            lambda obj: ValidatorFns.is_less_than(obj, value),
+            lambda obj: F.is_less_than(obj, value),
             msg=msg,
         )
 
     def is_not_less_than(self, value: Any, *, msg: str | None = None) -> Self:
-        msg = msg or f"object should not be less than {value} (rule: is_not_less_than)"
-        return self.add_validation(
-            lambda obj: not ValidatorFns.is_less_than(obj, value),
-            msg=msg,
-        )
+        msg = msg or f"Should not be less than {value} (rule: is_not_less_than)"
+        return self.add_validation(lambda obj: F.is_not_less_than(obj, value), msg=msg)
 
     def is_lt(self, value: Any, *, msg: str | None = None) -> Self:
         return self.is_less_than(value, msg=msg)
@@ -227,18 +216,15 @@ class ValidatorSpec:
         return self.is_not_less_than(value, msg=msg)
 
     def is_less_or_equal(self, value: Any, *, msg: str | None = None) -> Self:
-        msg = msg or f"object should be less than or equal to {value} (rule: is_less_or_equal)"
+        msg = msg or f"Should be less than or equal to {value} (rule: is_less_or_equal)"
         return self.add_validation(
-            lambda obj: ValidatorFns.is_less_or_equal(obj, value),
+            lambda obj: F.is_less_or_equal(obj, value),
             msg=msg,
         )
 
     def is_not_less_or_equal(self, value: Any, *, msg: str | None = None) -> Self:
-        msg = msg or f"object should not be less than or equal to {value} (rule: is_not_less_or_equal)"
-        return self.add_validation(
-            lambda obj: not ValidatorFns.is_less_or_equal(obj, value),
-            msg=msg,
-        )
+        msg = msg or f"Should not be less than or equal to {value} (rule: is_not_less_or_equal)"
+        return self.add_validation(lambda obj: F.is_not_less_or_equal(obj, value), msg=msg)
 
     def is_lte(self, value: Any, *, msg: str | None = None) -> Self:
         return self.is_less_or_equal(value, msg=msg)
@@ -254,9 +240,9 @@ class ValidatorSpec:
         closed: Literal["both", "left", "right", "none"] = "both",
         msg: str | None = None,
     ) -> Self:
-        msg = msg or f"object should be between {lower_bound} and {upper_bound} (closed='{closed}') (rule: is_between)"
+        msg = msg or f"Should be between {lower_bound} and {upper_bound} (closed='{closed}') (rule: is_between)"
         return self.add_validation(
-            lambda obj: ValidatorFns.is_between(obj, lower_bound, upper_bound, closed),
+            lambda obj: F.is_between(obj, lower_bound, upper_bound, closed),
             msg=msg,
         )
 
@@ -268,14 +254,8 @@ class ValidatorSpec:
         closed: Literal["both", "left", "right", "none"] = "both",
         msg: str | None = None,
     ) -> Self:
-        msg = (
-            msg
-            or f"object should not be between {lower_bound} and {upper_bound} (closed='{closed}') (rule: is_not_between)"
-        )
-        return self.add_validation(
-            lambda obj: not ValidatorFns.is_between(obj, lower_bound, upper_bound, closed),
-            msg=msg,
-        )
+        msg = msg or f"Should not be between {lower_bound} and {upper_bound} (closed='{closed}') (rule: is_not_between)"
+        return self.add_validation(lambda obj: F.is_not_between(obj, lower_bound, upper_bound, closed), msg=msg)
 
     def _render_pretty(self, node: tuple | None, indent: int = 0, *, is_top_level: bool = True) -> str:
         if node is None:

@@ -9,32 +9,26 @@ def test_describe_pretty_empty():
 
 def test_describe_pretty_single_validator():
     validator = vb.is_number()
-    assert validator.describe(pretty=True) == "'object should be a number (rule: is_number)'"
+    assert validator.describe(pretty=True) == "'Should be a number (rule: is_number)'"
 
 
 def test_describe_pretty_and_chain():
     validator = vb.is_number().is_string()
 
-    expected = "'object should be a number (rule: is_number)'\nAND 'object should be a string (rule: is_string)'"
+    expected = "'Should be a number (rule: is_number)'\nAND 'Should be a string (rule: is_string)'"
     assert validator.describe(pretty=True) == expected
 
 
 def test_describe_pretty_or_combination():
     validator = vb.is_number() | vb.is_string()
 
-    expected = (
-        "(\n"
-        "    'object should be a number (rule: is_number)'\n"
-        "    OR\n"
-        "    'object should be a string (rule: is_string)'\n"
-        ")"
-    )
+    expected = "(\n    'Should be a number (rule: is_number)'\n    OR\n    'Should be a string (rule: is_string)'\n)"
     assert validator.describe(pretty=True) == expected
 
 
 def test_describe_pretty_not():
     validator = -vb.is_number()
-    assert validator.describe(pretty=True) == "not 'object should be a number (rule: is_number)'"
+    assert validator.describe(pretty=True) == "not 'Should be a number (rule: is_number)'"
 
 
 def test_describe_pretty_complex_and_or_not():
@@ -43,13 +37,13 @@ def test_describe_pretty_complex_and_or_not():
     expected = (
         "(\n"
         "    (\n"
-        "        'object should be a number (rule: is_number)' AND\n"
-        "        'object should be between 10 and 20 (closed='both') (rule: is_between)'\n"
+        "        'Should be a number (rule: is_number)' AND\n"
+        "        'Should be between 10 and 20 (closed='both') (rule: is_between)'\n"
         "    )\n"
         "    OR\n"
-        "    'object should be None (rule: is_none)'\n"
+        "    'Should be None (rule: is_none)'\n"
         ")\n"
-        "AND not 'object should be a string (rule: is_string)'"
+        "AND not 'Should be a string (rule: is_string)'"
     )
     assert validator.describe(pretty=True) == expected
 
@@ -57,12 +51,7 @@ def test_describe_pretty_complex_and_or_not():
 def test_describe_pretty_not_compound():
     validator = -vb.is_number().is_string()
 
-    expected = (
-        "not (\n"
-        "    'object should be a number (rule: is_number)' AND\n"
-        "    'object should be a string (rule: is_string)'\n"
-        ")"
-    )
+    expected = "not (\n    'Should be a number (rule: is_number)' AND\n    'Should be a string (rule: is_string)'\n)"
     assert validator.describe(pretty=True) == expected
 
 
@@ -72,12 +61,12 @@ def test_describe_pretty_nested_or():
     expected = (
         "(\n"
         "    (\n"
-        "        'object should be a number (rule: is_number)'\n"
+        "        'Should be a number (rule: is_number)'\n"
         "        OR\n"
-        "        'object should be a string (rule: is_string)'\n"
+        "        'Should be a string (rule: is_string)'\n"
         "    )\n"
         "    OR\n"
-        "    'object should be None (rule: is_none)'\n"
+        "    'Should be None (rule: is_none)'\n"
         ")"
     )
     assert validator.describe(pretty=True) == expected
@@ -87,9 +76,9 @@ def test_describe_pretty_multiple_and():
     validator = vb.is_number().is_greater_than(0).is_less_than(100)
 
     expected = (
-        "'object should be a number (rule: is_number)'\n"
-        "AND 'object should be greater than 0 (rule: is_greater_than)'\n"
-        "AND 'object should be less than 100 (rule: is_less_than)'"
+        "'Should be a number (rule: is_number)'\n"
+        "AND 'Should be greater than 0 (rule: is_greater_than)'\n"
+        "AND 'Should be less than 100 (rule: is_less_than)'"
     )
     assert validator.describe(pretty=True) == expected
 
@@ -105,7 +94,7 @@ def test_describe_pretty_does_not_affect_non_pretty():
 def test_describe_pretty_and_operator():
     validator = vb.is_number() & vb.is_string()
 
-    expected = "'object should be a number (rule: is_number)'\nAND 'object should be a string (rule: is_string)'"
+    expected = "'Should be a number (rule: is_number)'\nAND 'Should be a string (rule: is_string)'"
     assert validator.describe(pretty=True) == expected
 
 
@@ -115,11 +104,11 @@ def test_describe_pretty_not_inside_or():
     expected = (
         "(\n"
         "    not (\n"
-        "        'object should be a number (rule: is_number)' AND\n"
-        "        'object should be a string (rule: is_string)'\n"
+        "        'Should be a number (rule: is_number)' AND\n"
+        "        'Should be a string (rule: is_string)'\n"
         "    )\n"
         "    OR\n"
-        "    'object should be None (rule: is_none)'\n"
+        "    'Should be None (rule: is_none)'\n"
         ")"
     )
     assert validator.describe(pretty=True) == expected
