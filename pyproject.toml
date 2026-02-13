@@ -58,12 +58,7 @@ extend-unsafe-fixes = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"src/fluent_validator/validators/functions.py" = ["D"]
-"src/fluent_validator/validators/validator_builder.py" = ["D"]
-"tests/**.py" = [
-    "D",
-    "S101",
-]
+"tests/**.py" = ["D", "S101"]
 
 
 [tool.taskipy.tasks]

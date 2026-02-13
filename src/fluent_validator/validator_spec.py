@@ -1,4 +1,4 @@
-"""Validators for fluent_validator.validators module.
+"""Validators for fluent_validator module.
 
 Provides ValidatorSpec, a composable builder for validation rules.
 """
@@ -6,7 +6,7 @@ Provides ValidatorSpec, a composable builder for validation rules.
 from collections.abc import Callable, Iterable
 from typing import Any, Literal, Self
 
-from fluent_validator.validators import functions as F
+from fluent_validator import functions as F
 
 from .exceptions import ValidationError
 

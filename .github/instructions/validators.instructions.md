@@ -33,7 +33,7 @@ Follow these strict rules when creating validators:
 
 Example pattern:
 
-from fluent_validator.validators import ValidatorBuilder as vb
+from fluent_validator import ValidatorBuilder as vb
 
 def test_is_example():
     value = ...
