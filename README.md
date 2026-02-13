@@ -76,10 +76,14 @@ not_none.validate(None, strategy="return_result")  # False
 
 ## describe (document rules)
 
-Each `ValidatorSpec` can render a textual description of the specification:
+
+Each `ValidatorSpec` can render a textual description of the specification. Here's a more complex example combining `AND`, `OR` and negation:
 
 ```python
-spec = Validator.is_number().is_greater_than(5).is_less_than(20)
+spec = (
+    (Validator.is_number().is_between(10, 20) | Validator.is_none())
+    & ~Validator.is_string()
+)
 print(spec.describe())
 print(spec.describe(pretty=True))
 ```
@@ -87,9 +91,15 @@ print(spec.describe(pretty=True))
 Example output for `pretty=True`:
 
 ```
-'Should be a number (rule: is_number)'
-AND 'Should be greater than 5 (rule: is_greater_than)'
-AND 'Should be less than 20 (rule: is_less_than)'
+(
+    (
+        'Should be a number (rule: is_number)' AND
+        'Should be between 10 and 20 (closed='both') (rule: is_between)'
+    )
+    OR
+    'Should be None (rule: is_none)'
+)
+AND not 'Should be a string (rule: is_string)'
 ```
 
 Use `describe()` to generate messages for logs, documentation, or custom error reporting.
