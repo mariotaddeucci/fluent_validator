@@ -448,14 +448,14 @@ class ValidatorSpec:
         for validation_fn, msg in self._validations:
             if not validation_fn(obj):
                 if strategy == "raise_after_first_error":
-                    raise ValidationError(msg)
+                    raise ValidationError(f"The value {obj!r} failed validation: {msg}")
                 errors.append(msg)
 
             if strategy == "return_result" and errors:
                 return False
 
         if strategy == "raise_after_all_errors" and errors:
-            raise ValidationError("; ".join(errors))
+            raise ValidationError(f"The value {obj!r} failed validation: {'; '.join(errors)}")
 
         return not errors
 
@@ -471,19 +471,21 @@ class ValidatorSpec:
     ) -> bool:
         """Validate each item in an iterable using the configured validations; may raise ValidationError with index info."""
         errors = []
+        if strategy in ["return_result", "raise_after_first_error"]:
+            return all(self.validate(item, strategy=strategy) for item in iterable)
+
+        errors = []
+
         for index, item in enumerate(iterable):
             try:
                 self.validate(item, strategy=strategy)
             except ValidationError as e:
-                error_msg = f"Item at index {index} failed validation: {e!s}"
-                if strategy == "raise_after_first_error":
-                    raise ValidationError(error_msg) from e
-                errors.append(error_msg)
+                errors.append(f"Item at index {index} failed validation: {e!r}")
 
-        if strategy == "raise_after_all_errors" and errors:
+        if errors:
             raise ValidationError("; ".join(errors))
 
-        return not errors
+        return True
 
     def __and__(self, other: "ValidatorSpec") -> Self:
         """Combine this ValidatorSpec with another using logical AND and return a new ValidatorSpec."""
