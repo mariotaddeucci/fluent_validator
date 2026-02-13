@@ -41,6 +41,7 @@ docstring-code-format = true
 extend-select = [
     "B",
     "COM",
+    "D",
     "EXE",
     "F",
     "I",
@@ -51,17 +52,19 @@ extend-select = [
     "S",
     "T",
     "UP",
-    "UP",
 ]
 extend-unsafe-fixes = [
     "UP",
 ]
 
 [tool.ruff.lint.per-file-ignores]
+"src/fluent_validator/validators/functions.py" = ["D"]
+"src/fluent_validator/validators/validator_builder.py" = ["D"]
 "tests/**.py" = [
     "D",
     "S101",
 ]
+
 
 [tool.taskipy.tasks]
 fix = "ruff check --fix . && ruff format . && ssort"
