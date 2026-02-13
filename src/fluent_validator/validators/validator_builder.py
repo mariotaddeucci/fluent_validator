@@ -1,4 +1,6 @@
-from typing import Type, Any, Callable, Literal
+from collections.abc import Callable
+from typing import Any, Literal
+
 from .validator_spec import ValidatorSpec
 
 
@@ -9,7 +11,10 @@ class ValidatorBuilder:
 
     @classmethod
     def is_instance_of(
-        cls, types: Type | tuple[Type, ...], *, msg: str | None = None
+        cls,
+        types: type | tuple[type, ...],
+        *,
+        msg: str | None = None,
     ) -> ValidatorSpec:
         return cls.prepare().is_instance_of(types, msg=msg)
 
@@ -51,7 +56,10 @@ class ValidatorBuilder:
 
     @classmethod
     def is_greater_or_equal(
-        cls, value: Any, *, msg: str | None = None
+        cls,
+        value: Any,
+        *,
+        msg: str | None = None,
     ) -> ValidatorSpec:
         return cls.prepare().is_greater_or_equal(value, msg=msg)
 
@@ -76,9 +84,7 @@ class ValidatorBuilder:
         return cls.prepare().is_lt(value, msg=msg)
 
     @classmethod
-    def is_less_or_equal(
-        cls, value: Any, *, msg: str | None = None
-    ) -> ValidatorSpec:
+    def is_less_or_equal(cls, value: Any, *, msg: str | None = None) -> ValidatorSpec:
         return cls.prepare().is_less_or_equal(value, msg=msg)
 
     @classmethod
@@ -87,13 +93,17 @@ class ValidatorBuilder:
 
     @classmethod
     def add_validation(
-        cls, validation_fn: Callable[[Any], bool], *, msg: str
+        cls,
+        validation_fn: Callable[[Any], bool],
+        *,
+        msg: str,
     ) -> ValidatorSpec:
         return cls.prepare().add_validation(validation_fn, msg=msg)
 
     @classmethod
     def add_validations(
-        cls, validations: list[tuple[Callable[[Any], bool], str]]
+        cls,
+        validations: list[tuple[Callable[[Any], bool], str]],
     ) -> ValidatorSpec:
         return cls.prepare().add_validations(validations)
 
@@ -107,12 +117,18 @@ class ValidatorBuilder:
         msg: str | None = None,
     ) -> ValidatorSpec:
         return cls.prepare().is_between(
-            lower_bound, upper_bound, closed=closed, msg=msg
+            lower_bound,
+            upper_bound,
+            closed=closed,
+            msg=msg,
         )
 
     @classmethod
     def is_not_instance_of(
-        cls, types: Type | tuple[Type, ...], *, msg: str | None = None
+        cls,
+        types: type | tuple[type, ...],
+        *,
+        msg: str | None = None,
     ) -> ValidatorSpec:
         return cls.prepare().is_not_instance_of(types, msg=msg)
 
@@ -145,7 +161,12 @@ class ValidatorBuilder:
         return cls.prepare().is_not_none(msg=msg)
 
     @classmethod
-    def is_not_greater_than(cls, value: Any, *, msg: str | None = None) -> ValidatorSpec:
+    def is_not_greater_than(
+        cls,
+        value: Any,
+        *,
+        msg: str | None = None,
+    ) -> ValidatorSpec:
         return cls.prepare().is_not_greater_than(value, msg=msg)
 
     @classmethod
@@ -154,7 +175,10 @@ class ValidatorBuilder:
 
     @classmethod
     def is_not_greater_or_equal(
-        cls, value: Any, *, msg: str | None = None
+        cls,
+        value: Any,
+        *,
+        msg: str | None = None,
     ) -> ValidatorSpec:
         return cls.prepare().is_not_greater_or_equal(value, msg=msg)
 
@@ -180,7 +204,10 @@ class ValidatorBuilder:
 
     @classmethod
     def is_not_less_or_equal(
-        cls, value: Any, *, msg: str | None = None
+        cls,
+        value: Any,
+        *,
+        msg: str | None = None,
     ) -> ValidatorSpec:
         return cls.prepare().is_not_less_or_equal(value, msg=msg)
 
@@ -198,7 +225,10 @@ class ValidatorBuilder:
         msg: str | None = None,
     ) -> ValidatorSpec:
         return cls.prepare().is_not_between(
-            lower_bound, upper_bound, closed=closed, msg=msg
+            lower_bound,
+            upper_bound,
+            closed=closed,
+            msg=msg,
         )
 
     @classmethod

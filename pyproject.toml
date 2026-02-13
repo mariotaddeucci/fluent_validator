@@ -28,3 +28,18 @@ addopts = [
     "--tb=short",
     "--disable-warnings",
 ]
+
+
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+extend-select = ["B", "Q", "UP", "I", "S", "T",  "COM", "EXE", "F", "ISC",  "RET", "RUF", "UP"]
+extend-unsafe-fixes = ["UP"]
+[tool.ruff.lint.per-file-ignores]
+"tests/**.py" = ["S101", "D"]

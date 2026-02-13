@@ -1,4 +1,3 @@
-import typing
 from functools import wraps
 
 from fluent_validator.validators.value_validator import ValueValidator
@@ -38,21 +37,18 @@ class Validator(ValueValidator):
 
 
 class MultiValidator:
-    def __init__(self, validators: typing.List[Validator]):
+    def __init__(self, validators: list[Validator]):
         self._validators = validators
 
     def __getattr__(self, fn_name):
         def wrapper(*args, **kwargs):
-            result = all(
-                getattr(validator, fn_name)(*args, **kwargs)
-                for validator in self._validators
-            )
+            result = all(getattr(validator, fn_name)(*args, **kwargs) for validator in self._validators)
 
             if result:
                 return self
 
             raise ValueError(
-                f"{self._validators} does not match criteria for {fn_name}"
+                f"{self._validators} does not match criteria for {fn_name}",
             )
 
         return wrapper

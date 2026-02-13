@@ -1,11 +1,12 @@
-from typing import Any, Iterable, Type, Literal
+from collections.abc import Iterable
 from dataclasses import is_dataclass
 from decimal import Decimal
+from typing import Any, Literal
 
 
 class ValidatorFns:
     @classmethod
-    def is_instance_of(cls, obj: Any, types: Type | tuple[Type, ...]) -> bool:
+    def is_instance_of(cls, obj: Any, types: type | tuple[type, ...]) -> bool:
         return isinstance(obj, types)
 
     @classmethod
@@ -65,25 +66,29 @@ class ValidatorFns:
         closed: Literal["both", "left", "right", "none"] = "both",
     ) -> bool:
         if closed == "both":
-            return cls.is_greater_or_equal(
-                obj, lower_bound
-            ) and cls.is_less_or_equal(obj, upper_bound)
+            return cls.is_greater_or_equal(obj, lower_bound) and cls.is_less_or_equal(
+                obj,
+                upper_bound,
+            )
 
         if closed == "left":
             return cls.is_greater_or_equal(obj, lower_bound) and cls.is_less_than(
-                obj, upper_bound
+                obj,
+                upper_bound,
             )
 
         if closed == "right":
             return cls.is_greater_than(obj, lower_bound) and cls.is_less_or_equal(
-                obj, upper_bound
+                obj,
+                upper_bound,
             )
 
         if closed == "none":
             return cls.is_greater_than(obj, lower_bound) and cls.is_less_than(
-                obj, upper_bound
+                obj,
+                upper_bound,
             )
 
         raise ValueError(
-            f"Invalid value for 'closed': {closed}. Expected one of 'both', 'left', 'right', 'none'."
+            f"Invalid value for 'closed': {closed}. Expected one of 'both', 'left', 'right', 'none'.",
         )
